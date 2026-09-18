@@ -63,6 +63,11 @@ tr:last-child td{border-bottom:none}
 .group-row{cursor:pointer;transition:.15s}
 .group-row:hover td{background:#f8fafc}
 .drill-back{background:none;border:none;color:#7c3aed;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px;padding:0;display:flex;align-items:center;gap:4px}
+.screenshot-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:16px}
+.screenshot-wrap img{width:100%;display:block;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90%;max-height:90vh;border-radius:8px;object-fit:contain}
 .footer{padding:16px 24px;text-align:center;color:#94a3b8;font-size:11px;border-top:1px solid #e2e8f0;background:#fff;margin-top:24px}
 </style>
 </head>
@@ -82,10 +87,14 @@ tr:last-child td{border-bottom:none}
   <div class="sidebar" id="sidebar"></div>
   <div class="content" id="content"></div>
 </div>
+<div class="lightbox" id="lightbox" onclick="document.getElementById('lightbox').classList.remove('open')">
+  <img id="lightboxImg" src="" alt=""/>
+</div>
 <div class="footer">Checkout Monitor &middot; Instabee Norway &middot; Updated weekly every Monday</div>
 <script>
 const WEEKS=["2026-W38"];
 const WEEK_META={"2026-W38":{label:"Week 38",scanDate:"18 Sep 2026"}};
+const SCREENSHOTS={"2026-W38":{villoid:"screenshots/w38/villoid.png",getinspired:"screenshots/w38/getinspired.png",bjorklund:"screenshots/w38/bjorklund.png",match:"screenshots/w38/match.png",decades:"screenshots/w38/decades.png",vic:"screenshots/w38/vic.png",tise:"screenshots/w38/tise.png",ankerstjerne:"screenshots/w38/ankerstjerne.png"}};
 const WEEK_DATA={"2026-W38":{
 clients:[
 {id:"villoid",name:"Villoid",type:"single",url:"villoid.com",status:"success"},
@@ -135,6 +144,7 @@ const posClass=p=>p===1?"pos-1":p===2?"pos-2":"pos-n";
 const statusDotClass=s=>s==="success"?"dot-success":s==="partial"?"dot-partial":"dot-manual";
 const statusPillClass=s=>s==="success"?"pill-success":s==="partial"?"pill-partial":"pill-manual";
 const statusLabel=s=>s==="success"?"&#x2713; Scanned":s==="partial"?"&#x26A0; Partial":"&#x270B; Manual";
+function openLightbox(src){var lb=document.getElementById("lightbox");document.getElementById("lightboxImg").src=src;lb.classList.add("open");}
 function getWD(){return WEEK_DATA[activeWeek];}
 function renderAll(){renderWeekTabs();renderSidebar();renderContent();renderBadges();}
 function renderWeekTabs(){var el=document.getElementById("weekTabs");el.innerHTML=WEEKS.map(function(w){return'<button class="week-tab'+(activeWeek===w?" active":"")+'" onclick="switchWeek(\''+w+'\')">'+WEEK_META[w].label+"</button>";}).join("");}
@@ -142,6 +152,7 @@ function renderBadges(){var wd=getWD();var all=[];wd.clients.forEach(function(c)
 function renderSidebar(){var wd=getWD();document.getElementById("sidebar").innerHTML=wd.clients.map(function(c){return'<button class="sidebar-item'+(activeClientId===c.id?" active":"")+'" onclick="switchClient(\''+c.id+'\')"><span class="sidebar-dot '+statusDotClass(c.status)+'"></span>'+c.name+"</button>";}).join("");}
 function renderContent(){var wd=getWD();var client=wd.clients.find(function(c){return c.id===activeClientId;});var el=document.getElementById("content");if(!client)return;if(client.type==="group"){if(!activeBrandId||activeBrandId==="overview"){el.innerHTML=renderGroupOverview(client,wd);}else{var brand=client.brands.find(function(b){return b.id===activeBrandId;});el.innerHTML='<button class="drill-back" onclick="activeBrandId=null;renderAll()">&#x2190; Back to '+client.name+"</button>"+renderDetail(brand.id,brand.url,brand.status,wd);}}else{el.innerHTML=renderDetail(client.id,client.url,client.status,wd);}}
 function renderGroupOverview(client,wd){var rows=client.brands.map(function(brand){var data=wd.allData[brand.id]||[];var pb=data.find(function(d){return d.provider==="Porterbuddy";});var ib=data.find(function(d){return d.provider==="Instabox";});var cc=data.filter(function(d){return d.cat==="competitor";}).sort(function(a,b){return a.price-b.price;})[0];return'<tr class="group-row" onclick="activeBrandId=\''+brand.id+'\';renderAll()"><td><span class="provider-name">'+brand.name+'</span><div class="provider-desc">'+brand.url+"</div></td><td>"+(pb?'<span class="pos-circle '+posClass(pb.pos)+'">'+pb.pos+"</span> "+'<span style="color:#16a34a;font-weight:600;font-size:12px">'+priceStr(pb.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+"</td><td>"+(ib?'<span class="pos-circle '+posClass(ib.pos)+'">'+ib.pos+"</span> "+'<span style="color:#16a34a;font-weight:600;font-size:12px">'+priceStr(ib.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+"</td><td>"+(cc?'<span style="font-size:12px;color:#64748b">'+cc.provider+" &mdash; "+priceStr(cc.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+'</td><td><span class="status-pill '+statusPillClass(brand.status)+'">'+statusLabel(brand.status)+'</span></td><td style="text-align:right;font-size:12px;color:#7c3aed;font-weight:600">View &rarr;</td></tr>';}).join("");return'<div style="margin-bottom:12px"><span style="font-size:14px;font-weight:700;color:#0f172a">'+client.name+' &mdash; All brands</span><span style="font-size:12px;color:#64748b;margin-left:8px">Click a row to drill in</span></div><div class="table-wrap"><table><thead><tr><th>Brand</th><th>Porterbuddy</th><th>Instabox</th><th>Cheapest competitor</th><th>Status</th><th class="right"></th></tr></thead><tbody>'+rows+"</tbody></table></div>";}
+function renderScreenshot(id){var shots=SCREENSHOTS[activeWeek];if(!shots||!shots[id])return"";return'<div class="screenshot-wrap"><div class="table-header">Checkout screenshot &#x2014; click to enlarge</div><img src="'+shots[id]+'" alt="'+id+' checkout" onclick="openLightbox(this.src)" loading="lazy"/></div>';}
 function renderDetail(id,url,status,wd){var data=wd.allData[id]||[];var note=wd.scanNotes[id];var summary=wd.summaries[id]||[];var isTise=id==="tise";var wMeta=WEEK_META[activeWeek];if(status==="manual_needed"||(data.length===0&&status!=="partial")){return'<div class="empty-state"><div class="empty-icon">'+(status==="manual_needed"?"&#x26A0;&#xFE0F;":"&#x274C;")+'</div><div class="empty-title">'+(status==="manual_needed"?"Manual check required":"No data")+'</div><div class="empty-url">'+url+"</div>"+(note?'<div class="note-box" style="margin-top:16px;max-width:520px;margin-left:auto;margin-right:auto">&#x2139;&#xFE0F; '+note+"</div>":"")+"</div>";}
 var instabeeRows=data.filter(function(d){return d.cat==="instabee";});var prices=data.map(function(d){return d.price;});var minPrice=Math.min.apply(null,prices);var cheapest=data.find(function(d){return d.price===minPrice;});
 var statCards='<div class="stat-cards"><div class="stat-card"><div class="stat-label">Options</div><div class="stat-value">'+(isTise?"3 tiers":data.length)+"</div></div>"+instabeeRows.map(function(r){return'<div class="stat-card green"><div class="stat-label green">'+r.provider+(isTise?" ("+r.sizeTier+")":"")+'</div><div class="stat-value green">#'+r.pos+'</div><div class="stat-sub green">'+priceStr(r.price)+" &middot; "+r.days+"</div></div>";}).join("")+'<div class="stat-card"><div class="stat-label">Cheapest</div><div class="stat-value">'+priceStr(minPrice)+'</div><div class="stat-sub">'+(cheapest?cheapest.provider+" (pos "+cheapest.pos+")":" ")+"</div></div></div>";
@@ -151,7 +162,7 @@ var tableRows;
 if(isTise){tableRows=data.map(function(row){return'<tr class="instabee"><td style="font-weight:600;color:#374151">'+row.sizeTier+'</td><td><span class="provider-name" style="color:#16a34a">'+row.provider+'</span><span class="instabee-badge">instabee</span></td><td style="font-weight:700;color:#16a34a">From '+priceStr(row.price)+'</td><td class="days-cell">'+row.desc+'</td><td style="text-align:right" class="days-cell">'+row.days+"</td></tr>";}).join("");}
 else{tableRows=data.map(function(row){return"<tr"+(row.cat==="instabee"?' class="instabee"':"")+'><td><span class="pos-circle '+posClass(row.pos)+'">'+row.pos+"</span></td><td><div><span class=\"provider-name\">"+row.provider+"</span>"+(row.cat==="instabee"?'<span class="instabee-badge">instabee</span>':"")+"</div><div class=\"provider-desc\">"+row.desc+'</div></td><td class="days-cell">'+row.days+'</td><td class="price-cell">'+priceStr(row.price)+"</td></tr>";}).join("");}
 var tableHeaders=isTise?"<th>Size tier</th><th>Provider</th><th>Min. price</th><th>Options included</th><th class=\"right\">Lead time</th>":"<th>#</th><th>Provider</th><th>Lead time</th><th class=\"right\">Price</th>";
-return statCards+obs+noteHtml+'<div class="table-wrap"><div class="table-header">Delivery options &mdash; '+wMeta.scanDate+"</div><table><thead><tr>"+tableHeaders+"</tr></thead><tbody>"+tableRows+"</tbody></table></div>";}
+return statCards+obs+noteHtml+'<div class="table-wrap"><div class="table-header">Delivery options &mdash; '+wMeta.scanDate+"</div><table><thead><tr>"+tableHeaders+"</tr></thead><tbody>"+tableRows+"</tbody></table></div>"+renderScreenshot(id);}
 function switchWeek(w){activeWeek=w;activeClientId="villoid";activeBrandId=null;renderAll();}
 function switchClient(id){activeClientId=id;activeBrandId=null;renderAll();}
 renderAll();
