@@ -46,9 +46,11 @@ th{padding:8px 14px;text-align:left;color:#64748b;font-weight:600;font-size:11px
 th.right{text-align:right}
 td{padding:9px 14px;border-bottom:1px solid #f1f5f9}
 tr.instabee{background:#f0fdf4}
+tr.tier-divider td{border-top:2px solid #e2e8f0;padding-top:11px}
 tr:last-child td{border-bottom:none}
 .pos-circle{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-weight:700;font-size:11px;flex-shrink:0}
 .pos-1{background:#fbbf24;color:#111}.pos-2{background:#d1d5db;color:#111}.pos-n{background:#f3f4f6;color:#374151}
+.tier-pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:#ede9fe;color:#6d28d9}
 .provider-name{font-weight:600;color:#0f172a}
 .provider-desc{font-size:11px;color:#64748b}
 .instabee-badge{display:inline-block;padding:1px 6px;border-radius:999px;font-size:10px;font-weight:700;background:#16a34a;color:#fff;margin-left:4px;vertical-align:middle}
@@ -65,9 +67,9 @@ tr:last-child td{border-bottom:none}
 .drill-back{background:none;border:none;color:#7c3aed;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px;padding:0;display:flex;align-items:center;gap:4px}
 .screenshot-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:16px}
 .screenshot-wrap img{width:100%;display:block;cursor:zoom-in}
-.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
 .lightbox.open{display:flex}
-.lightbox img{max-width:90%;max-height:90vh;border-radius:8px;object-fit:contain}
+.lightbox img{max-width:92%;max-height:92vh;border-radius:6px;object-fit:contain;box-shadow:0 8px 40px rgba(0,0,0,.6)}
 .footer{padding:16px 24px;text-align:center;color:#94a3b8;font-size:11px;border-top:1px solid #e2e8f0;background:#fff;margin-top:24px}
 </style>
 </head>
@@ -92,9 +94,10 @@ tr:last-child td{border-bottom:none}
 </div>
 <div class="footer">Checkout Monitor &middot; Instabee Norway &middot; Updated weekly every Monday</div>
 <script>
+const BASE="https://sindreeriksen-wq.github.io/checkout-monitor";
 const WEEKS=["2026-W38"];
 const WEEK_META={"2026-W38":{label:"Week 38",scanDate:"18 Sep 2026"}};
-const SCREENSHOTS={"2026-W38":{villoid:"screenshots/w38/villoid.png",getinspired:"screenshots/w38/getinspired.png",bjorklund:"screenshots/w38/bjorklund.png",match:"screenshots/w38/match.png",decades:"screenshots/w38/decades.png",vic:"screenshots/w38/vic.png",tise:"screenshots/w38/tise.png",ankerstjerne:"screenshots/w38/ankerstjerne.png"}};
+const SCREENSHOTS={"2026-W38":{villoid:BASE+"/screenshots/w38/villoid.png",getinspired:BASE+"/screenshots/w38/getinspired.png",bjorklund:BASE+"/screenshots/w38/bjorklund.png",match:BASE+"/screenshots/w38/match.png",decades:BASE+"/screenshots/w38/decades.png",vic:BASE+"/screenshots/w38/vic.png",tise:BASE+"/screenshots/w38/tise.png",ankerstjerne:BASE+"/screenshots/w38/ankerstjerne.png"}};
 const WEEK_DATA={"2026-W38":{
 clients:[
 {id:"villoid",name:"Villoid",type:"single",url:"villoid.com",status:"success"},
@@ -116,7 +119,16 @@ bjorklund:[{pos:1,provider:"Porterbuddy",cat:"instabee",price:79,days:"Next day"
 match:[{pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2\u20134 days",desc:"PostNord utleveringssted"},{pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"},{pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2\u20134 days",desc:"Hjemlevering"},{pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2\u20134 days",desc:"Levering til butikk"}],
 decades:[{pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2\u20134 days",desc:"PostNord utleveringssted"},{pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"},{pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2\u20134 days",desc:"Hjemlevering"},{pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2\u20134 days",desc:"Levering til butikk"}],
 vic:[{pos:1,provider:"PostNord",cat:"competitor",price:59,days:"3\u20135 days",desc:"PostNord utleveringssted"},{pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"},{pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"3\u20135 days",desc:"Hjemlevering"},{pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"3\u20135 days",desc:"Levering til butikk"}],
-tise:[{pos:1,provider:"Instabox",cat:"instabee",price:29,days:"1 day",desc:"Small (jewellery) \u2014 + Posten + Helthjem",sizeTier:"Small"},{pos:1,provider:"Instabox",cat:"instabee",price:49,days:"1 day",desc:"Medium (shoes) \u2014 + Posten + Helthjem",sizeTier:"Medium"},{pos:1,provider:"Instabox",cat:"instabee",price:89,days:"1 day",desc:"Large (physical) \u2014 + Posten",sizeTier:"Large"}],
+tise:[
+  {pos:1,provider:"Instabox",cat:"instabee",price:29,days:"1 day",desc:"Pakkeautomat",sizeTier:"Small"},
+  {pos:2,provider:"Posten",cat:"competitor",price:29,days:"1\u20132 days",desc:"Pakke i postkassen",sizeTier:"Small"},
+  {pos:3,provider:"Helthjem",cat:"competitor",price:29,days:"2\u20133 days",desc:"Til d\u00f8rmatte",sizeTier:"Small"},
+  {pos:1,provider:"Instabox",cat:"instabee",price:49,days:"1 day",desc:"Pakkeautomat",sizeTier:"Medium"},
+  {pos:2,provider:"Posten",cat:"competitor",price:49,days:"1\u20132 days",desc:"Pakke i postkassen",sizeTier:"Medium"},
+  {pos:3,provider:"Helthjem",cat:"competitor",price:49,days:"2\u20133 days",desc:"Til d\u00f8rmatte",sizeTier:"Medium"},
+  {pos:1,provider:"Instabox",cat:"instabee",price:89,days:"1 day",desc:"Pakkeautomat",sizeTier:"Large"},
+  {pos:2,provider:"Posten",cat:"competitor",price:89,days:"1\u20132 days",desc:"Pakke i postkassen",sizeTier:"Large"}
+],
 ankerstjerne:[{pos:1,provider:"Instabox",cat:"instabee",price:39,days:"2 days",desc:"Pakkeautomat Gr\u00f8nlandsleiret Extra"},{pos:2,provider:"Bring",cat:"competitor",price:39,days:"2\u20133 days",desc:"Bring Pakke i postkassen"},{pos:3,provider:"PostNord",cat:"competitor",price:49,days:"2\u20134 days",desc:"PostNord pakkeboks / Mypack small"},{pos:4,provider:"Pr\u00f8vepakke frakt",cat:"unknown",price:49,days:"2\u20134 days",desc:"Pr\u00f8vepakke frakt"},{pos:5,provider:"Helthjem",cat:"competitor",price:59,days:"2\u20133 days",desc:"Helt Hjem til postkasse/d\u00f8rmatte"},{pos:6,provider:"PostNord",cat:"competitor",price:59,days:"2\u20134 days",desc:"PostNord hentested / MyPack Collect"},{pos:7,provider:"Porterbuddy",cat:"instabee",price:90,days:"3 days",desc:"Porterbuddy levert p\u00e5 d\u00f8ren (mandag) 17:30\u201321:30"},{pos:8,provider:"Porterbuddy",cat:"instabee",price:90,days:"4 days",desc:"Porterbuddy levert p\u00e5 d\u00f8ren (tirsdag) 17:30\u201321:30"},{pos:9,provider:"Porterbuddy",cat:"instabee",price:90,days:"5 days",desc:"Porterbuddy levert p\u00e5 d\u00f8ren (onsdag) 17:30\u201321:30"}]
 },
 summaries:{
@@ -126,12 +138,12 @@ bjorklund:["Porterbuddy #1 \u2014 top position. \u2705","79 NOK \u2014 competiti
 match:["Porterbuddy #2 \u2014 right after PostNord. \u2705","Real prices confirmed: 119 NOK test product (600 NOK free-ship threshold).","Porterbuddy 89 NOK ties with generic home delivery \u2014 competitive."],
 decades:["Porterbuddy #2 \u2014 right after PostNord. \u2705","Real prices confirmed: 104 NOK test product (800 NOK free-ship threshold).","Same platform and pricing as Match."],
 vic:["Porterbuddy #2 \u2014 right after PostNord. \u2705","89 NOK ties generic home delivery (pos 3).","No Instabox present."],
-tise:["Instabox #1 across all size tiers. \u2705","Prices: Small 29 / Medium 49 / Large 89 NOK.","Helthjem available small + medium only."],
+tise:["Instabox #1 across all size tiers. \u2705","All providers charge the same starting price: Small 29 / Medium 49 / Large 89 NOK.","Helthjem available for Small + Medium only \u2014 not Large.","Posten available for all 3 tiers."],
 ankerstjerne:["Instabox #1 \u2014 top position at 39 NOK. \u2705","Porterbuddy #7/8/9 \u2014 three day-slots at 90 NOK each.","Geo-block fixed: Norwegian locale + Oslo geolocation in scanner."],
 telenor:["Permanent manual check \u2014 BankID blocks automation."]
 },
 scanNotes:{
-tise:"Marketplace \u2014 minimum prices per size tier. Exact per-provider prices require Norwegian IP.",
+tise:"Marketplace \u2014 prices set by platform minimum per size tier. All providers charge the same starting price. Norwegian IP needed for exact per-transaction prices.",
 ankerstjerne:"Shopify. 9 delivery options. Instabox pos 1 (39 NOK), Porterbuddy pos 7\u20139 (90 NOK, 3 day-slots). Geo-block resolved.",
 telenor:"Permanent manual check \u2014 BankID required at checkout.",
 match:"Re-scanned with 119 NOK product. Free shipping threshold at Match is 600 NOK.",
@@ -144,7 +156,7 @@ const posClass=p=>p===1?"pos-1":p===2?"pos-2":"pos-n";
 const statusDotClass=s=>s==="success"?"dot-success":s==="partial"?"dot-partial":"dot-manual";
 const statusPillClass=s=>s==="success"?"pill-success":s==="partial"?"pill-partial":"pill-manual";
 const statusLabel=s=>s==="success"?"&#x2713; Scanned":s==="partial"?"&#x26A0; Partial":"&#x270B; Manual";
-function openLightbox(src){var lb=document.getElementById("lightbox");document.getElementById("lightboxImg").src=src;lb.classList.add("open");}
+function openLightbox(src){document.getElementById("lightboxImg").src=src;document.getElementById("lightbox").classList.add("open");}
 function getWD(){return WEEK_DATA[activeWeek];}
 function renderAll(){renderWeekTabs();renderSidebar();renderContent();renderBadges();}
 function renderWeekTabs(){var el=document.getElementById("weekTabs");el.innerHTML=WEEKS.map(function(w){return'<button class="week-tab'+(activeWeek===w?" active":"")+'" onclick="switchWeek(\''+w+'\')">'+WEEK_META[w].label+"</button>";}).join("");}
@@ -154,14 +166,30 @@ function renderContent(){var wd=getWD();var client=wd.clients.find(function(c){r
 function renderGroupOverview(client,wd){var rows=client.brands.map(function(brand){var data=wd.allData[brand.id]||[];var pb=data.find(function(d){return d.provider==="Porterbuddy";});var ib=data.find(function(d){return d.provider==="Instabox";});var cc=data.filter(function(d){return d.cat==="competitor";}).sort(function(a,b){return a.price-b.price;})[0];return'<tr class="group-row" onclick="activeBrandId=\''+brand.id+'\';renderAll()"><td><span class="provider-name">'+brand.name+'</span><div class="provider-desc">'+brand.url+"</div></td><td>"+(pb?'<span class="pos-circle '+posClass(pb.pos)+'">'+pb.pos+"</span> "+'<span style="color:#16a34a;font-weight:600;font-size:12px">'+priceStr(pb.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+"</td><td>"+(ib?'<span class="pos-circle '+posClass(ib.pos)+'">'+ib.pos+"</span> "+'<span style="color:#16a34a;font-weight:600;font-size:12px">'+priceStr(ib.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+"</td><td>"+(cc?'<span style="font-size:12px;color:#64748b">'+cc.provider+" &mdash; "+priceStr(cc.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+'</td><td><span class="status-pill '+statusPillClass(brand.status)+'">'+statusLabel(brand.status)+'</span></td><td style="text-align:right;font-size:12px;color:#7c3aed;font-weight:600">View &rarr;</td></tr>';}).join("");return'<div style="margin-bottom:12px"><span style="font-size:14px;font-weight:700;color:#0f172a">'+client.name+' &mdash; All brands</span><span style="font-size:12px;color:#64748b;margin-left:8px">Click a row to drill in</span></div><div class="table-wrap"><table><thead><tr><th>Brand</th><th>Porterbuddy</th><th>Instabox</th><th>Cheapest competitor</th><th>Status</th><th class="right"></th></tr></thead><tbody>'+rows+"</tbody></table></div>";}
 function renderScreenshot(id){var shots=SCREENSHOTS[activeWeek];if(!shots||!shots[id])return"";return'<div class="screenshot-wrap"><div class="table-header">Checkout screenshot &#x2014; click to enlarge</div><img src="'+shots[id]+'" alt="'+id+' checkout" onclick="openLightbox(this.src)" loading="lazy"/></div>';}
 function renderDetail(id,url,status,wd){var data=wd.allData[id]||[];var note=wd.scanNotes[id];var summary=wd.summaries[id]||[];var isTise=id==="tise";var wMeta=WEEK_META[activeWeek];if(status==="manual_needed"||(data.length===0&&status!=="partial")){return'<div class="empty-state"><div class="empty-icon">'+(status==="manual_needed"?"&#x26A0;&#xFE0F;":"&#x274C;")+'</div><div class="empty-title">'+(status==="manual_needed"?"Manual check required":"No data")+'</div><div class="empty-url">'+url+"</div>"+(note?'<div class="note-box" style="margin-top:16px;max-width:520px;margin-left:auto;margin-right:auto">&#x2139;&#xFE0F; '+note+"</div>":"")+"</div>";}
-var instabeeRows=data.filter(function(d){return d.cat==="instabee";});var prices=data.map(function(d){return d.price;});var minPrice=Math.min.apply(null,prices);var cheapest=data.find(function(d){return d.price===minPrice;});
-var statCards='<div class="stat-cards"><div class="stat-card"><div class="stat-label">Options</div><div class="stat-value">'+(isTise?"3 tiers":data.length)+"</div></div>"+instabeeRows.map(function(r){return'<div class="stat-card green"><div class="stat-label green">'+r.provider+(isTise?" ("+r.sizeTier+")":"")+'</div><div class="stat-value green">#'+r.pos+'</div><div class="stat-sub green">'+priceStr(r.price)+" &middot; "+r.days+"</div></div>";}).join("")+'<div class="stat-card"><div class="stat-label">Cheapest</div><div class="stat-value">'+priceStr(minPrice)+'</div><div class="stat-sub">'+(cheapest?cheapest.provider+" (pos "+cheapest.pos+")":" ")+"</div></div></div>";
+var instabeeRows=data.filter(function(d){return d.cat==="instabee";});
+var minPrice,cheapest;
+if(isTise){minPrice=29;cheapest={provider:"Instabox",pos:1};}
+else{var prices=data.map(function(d){return d.price;});minPrice=Math.min.apply(null,prices);cheapest=data.find(function(d){return d.price===minPrice;});}
+var uniqueInstabee=[];var seen={};instabeeRows.forEach(function(r){if(!seen[r.sizeTier||r.provider]){seen[r.sizeTier||r.provider]=true;uniqueInstabee.push(r);}});
+var statCards='<div class="stat-cards"><div class="stat-card"><div class="stat-label">Options</div><div class="stat-value">'+(isTise?"3 tiers":data.length)+"</div></div>"+uniqueInstabee.slice(0,3).map(function(r){return'<div class="stat-card green"><div class="stat-label green">Instabox'+(isTise?" "+r.sizeTier:"")+'</div><div class="stat-value green">#'+r.pos+'</div><div class="stat-sub green">'+priceStr(r.price)+" &middot; "+r.days+"</div></div>";}).join("")+'<div class="stat-card"><div class="stat-label">Cheapest</div><div class="stat-value">'+priceStr(minPrice)+'</div><div class="stat-sub">'+(cheapest?cheapest.provider:"")+"</div></div></div>";
 var obs=summary.length?'<div class="observations"><div class="obs-title">&#x1F4A1; Key observations &mdash; '+wMeta.label+"</div>"+summary.map(function(l){return'<div class="obs-item">&bull; '+l+"</div>";}).join("")+"</div>":"";
 var noteHtml=note?'<div class="note-box">&#x2139;&#xFE0F; '+note+"</div>":"";
-var tableRows;
-if(isTise){tableRows=data.map(function(row){return'<tr class="instabee"><td style="font-weight:600;color:#374151">'+row.sizeTier+'</td><td><span class="provider-name" style="color:#16a34a">'+row.provider+'</span><span class="instabee-badge">instabee</span></td><td style="font-weight:700;color:#16a34a">From '+priceStr(row.price)+'</td><td class="days-cell">'+row.desc+'</td><td style="text-align:right" class="days-cell">'+row.days+"</td></tr>";}).join("");}
-else{tableRows=data.map(function(row){return"<tr"+(row.cat==="instabee"?' class="instabee"':"")+'><td><span class="pos-circle '+posClass(row.pos)+'">'+row.pos+"</span></td><td><div><span class=\"provider-name\">"+row.provider+"</span>"+(row.cat==="instabee"?'<span class="instabee-badge">instabee</span>':"")+"</div><div class=\"provider-desc\">"+row.desc+'</div></td><td class="days-cell">'+row.days+'</td><td class="price-cell">'+priceStr(row.price)+"</td></tr>";}).join("");}
-var tableHeaders=isTise?"<th>Size tier</th><th>Provider</th><th>Min. price</th><th>Options included</th><th class=\"right\">Lead time</th>":"<th>#</th><th>Provider</th><th>Lead time</th><th class=\"right\">Price</th>";
+var tableRows,tableHeaders;
+if(isTise){
+  var tiers=["Small","Medium","Large"];
+  tableRows=tiers.map(function(tier,ti){
+    var tierRows=data.filter(function(r){return r.sizeTier===tier;});
+    return tierRows.map(function(row,ri){
+      var divider=(ti>0&&ri===0)?' class="instabee tier-divider"':(row.cat==="instabee"?' class="instabee"':"");
+      return"<tr"+divider+'><td>'+(ri===0?'<span class="tier-pill">'+tier+"</span>":"")+'</td><td><span class="provider-name'+(row.cat==="instabee"?" ":'">'+row.provider)+(row.cat==="instabee"?'" style="color:#16a34a">'+row.provider+'</span><span class="instabee-badge">instabee</span>':"</span>")+'</td><td class="days-cell">'+row.desc+'</td><td class="price-cell">'+priceStr(row.price)+'</td><td class="days-cell">'+row.days+"</td></tr>";
+    }).join("");
+  }).join("");
+  tableHeaders="<th>Size tier</th><th>Provider</th><th>Service</th><th class=\"right\">Price</th><th>Lead time</th>";
+}
+else{
+  tableRows=data.map(function(row){return"<tr"+(row.cat==="instabee"?' class="instabee"':"")+'><td><span class="pos-circle '+posClass(row.pos)+'">'+row.pos+"</span></td><td><div><span class=\"provider-name\">"+row.provider+"</span>"+(row.cat==="instabee"?'<span class="instabee-badge">instabee</span>':"")+"</div><div class=\"provider-desc\">"+row.desc+'</div></td><td class="days-cell">'+row.days+'</td><td class="price-cell">'+priceStr(row.price)+"</td></tr>";}).join("");
+  tableHeaders="<th>#</th><th>Provider</th><th>Lead time</th><th class=\"right\">Price</th>";
+}
 return statCards+obs+noteHtml+'<div class="table-wrap"><div class="table-header">Delivery options &mdash; '+wMeta.scanDate+"</div><table><thead><tr>"+tableHeaders+"</tr></thead><tbody>"+tableRows+"</tbody></table></div>"+renderScreenshot(id);}
 function switchWeek(w){activeWeek=w;activeClientId="villoid";activeBrandId=null;renderAll();}
 function switchClient(id){activeClientId=id;activeBrandId=null;renderAll();}
