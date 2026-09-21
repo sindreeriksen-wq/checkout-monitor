@@ -1,199 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Checkout Monitor — Norway | Instabee</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#0f172a;min-height:100vh}
-.header{background:#fff;border-bottom:1px solid #e2e8f0;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.header-title{font-size:18px;font-weight:800;color:#0f172a}
-.header-sub{font-size:12px;color:#64748b;margin-top:2px}
-.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.week-tabs{display:flex;gap:4px}
-.week-tab{cursor:pointer;padding:4px 12px;border-radius:8px;font-size:13px;border:none;background:#f1f5f9;color:#64748b;transition:.15s}
-.week-tab.active{background:#7c3aed;color:#fff;font-weight:700}
-.badge{text-align:center;padding:4px 12px;border-radius:8px}
-.badge-green{background:#dcfce7}.badge-green .bn{color:#16a34a;font-size:16px;font-weight:700}.badge-green .bl{color:#16a34a;font-size:10px;font-weight:600}
-.badge-yellow{background:#fef3c7}.badge-yellow .bn{color:#d97706;font-size:16px;font-weight:700}.badge-yellow .bl{color:#d97706;font-size:10px;font-weight:600}
-.main{display:flex;min-height:calc(100vh - 80px)}
-.sidebar{width:200px;flex-shrink:0;background:#fff;border-right:1px solid #e2e8f0;padding:12px 8px}
-.sidebar-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:#374151;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;transition:.15s}
-.sidebar-item:hover{background:#f8fafc}
-.sidebar-item.active{background:#f5f3ff;color:#7c3aed;font-weight:600}
-.sidebar-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dot-success{background:#22c55e}.dot-partial{background:#f59e0b}.dot-manual{background:#ef4444}
-.content{flex:1;padding:24px;max-width:900px}
-.stat-cards{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;flex:1;min-width:100px}
-.stat-card.green{background:#f0fdf4;border-color:#bbf7d0}
-.stat-label{font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.stat-label.green{color:#16a34a}
-.stat-value{font-size:28px;font-weight:700;color:#0f172a;line-height:1.1}
-.stat-value.green{color:#16a34a}
-.stat-sub{font-size:12px;color:#94a3b8;margin-top:2px}
-.stat-sub.green{color:#4ade80}
-.observations{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px;margin-bottom:16px}
-.obs-title{font-weight:600;color:#92400e;font-size:13px;margin-bottom:8px}
-.obs-item{font-size:12px;color:#78350f;margin-top:4px}
-.note-box{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px;margin-bottom:16px;font-size:12px;color:#78350f}
-.table-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:16px}
-.table-header{padding:12px 18px;border-bottom:1px solid #f1f5f9;background:#fafafa;font-weight:600;color:#0f172a;font-size:14px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead tr{background:#f8fafc;border-bottom:1px solid #e2e8f0}
-th{padding:8px 14px;text-align:left;color:#64748b;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
-th.right{text-align:right}
-td{padding:9px 14px;border-bottom:1px solid #f1f5f9}
-tr.instabee{background:#f0fdf4}
-tr.tier-divider td{border-top:2px solid #e2e8f0;padding-top:11px}
-tr:last-child td{border-bottom:none}
-.pos-circle{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-weight:700;font-size:11px;flex-shrink:0}
-.pos-1{background:#fbbf24;color:#111}.pos-2{background:#d1d5db;color:#111}.pos-n{background:#f3f4f6;color:#374151}
-.tier-pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;background:#ede9fe;color:#6d28d9}
-.provider-name{font-weight:600;color:#0f172a}
-.provider-desc{font-size:11px;color:#64748b}
-.instabee-badge{display:inline-block;padding:1px 6px;border-radius:999px;font-size:10px;font-weight:700;background:#16a34a;color:#fff;margin-left:4px;vertical-align:middle}
-.price-cell{text-align:right;font-weight:700;color:#0f172a}
-.days-cell{color:#6b7280;font-size:12px}
-.empty-state{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:48px;text-align:center}
-.empty-icon{font-size:36px;margin-bottom:12px}
-.empty-title{font-weight:700;color:#0f172a;font-size:16px}
-.empty-url{color:#64748b;font-size:13px;margin-top:4px}
-.status-pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
-.pill-success{background:#dcfce7;color:#16a34a}.pill-partial{background:#fef3c7;color:#d97706}.pill-manual{background:#fee2e2;color:#dc2626}
-.group-row{cursor:pointer;transition:.15s}
-.group-row:hover td{background:#f8fafc}
-.drill-back{background:none;border:none;color:#7c3aed;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px;padding:0;display:flex;align-items:center;gap:4px}
-.screenshot-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:16px}
-.screenshot-wrap img{width:100%;display:block;cursor:zoom-in}
-.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
-.lightbox.open{display:flex}
-.lightbox img{max-width:92%;max-height:92vh;border-radius:6px;object-fit:contain;box-shadow:0 8px 40px rgba(0,0,0,.6)}
-.footer{padding:16px 24px;text-align:center;color:#94a3b8;font-size:11px;border-top:1px solid #e2e8f0;background:#fff;margin-top:24px}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Checkout Monitor — Norway | Instabee</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
 </head>
 <body>
-<div class="header">
-  <div>
-    <div class="header-title">&#x1F4E6; Checkout Monitor &#x2014; Norway</div>
-    <div class="header-sub">Instabee &middot; Porterbuddy &amp; Instabox &middot; Weekly scan</div>
-  </div>
-  <div class="header-right">
-    <div class="week-tabs" id="weekTabs"></div>
-    <div class="badge badge-green"><div class="bn" id="scannedCount">-</div><div class="bl">SCANNED</div></div>
-    <div class="badge badge-yellow"><div class="bn" id="issueCount">-</div><div class="bl">ISSUES</div></div>
-  </div>
-</div>
-<div class="main">
-  <div class="sidebar" id="sidebar"></div>
-  <div class="content" id="content"></div>
-</div>
-<div class="lightbox" id="lightbox" onclick="document.getElementById('lightbox').classList.remove('open')">
-  <img id="lightboxImg" src="" alt=""/>
-</div>
-<div class="footer">Checkout Monitor &middot; Instabee Norway &middot; Updated weekly every Monday</div>
-<script>
-const BASE="https://sindreeriksen-wq.github.io/checkout-monitor";
-const WEEKS=["2026-W38"];
-const WEEK_META={"2026-W38":{label:"Week 38",scanDate:"18 Sep 2026"}};
-const SCREENSHOTS={"2026-W38":{villoid:BASE+"/screenshots/w38/villoid.png",getinspired:BASE+"/screenshots/w38/getinspired.png",bjorklund:BASE+"/screenshots/w38/bjorklund.png",match:BASE+"/screenshots/w38/match.png",decades:BASE+"/screenshots/w38/decades.png",vic:BASE+"/screenshots/w38/vic.png",tise:BASE+"/screenshots/w38/tise.png",ankerstjerne:BASE+"/screenshots/w38/ankerstjerne.png"}};
-const WEEK_DATA={"2026-W38":{
-clients:[
-{id:"villoid",name:"Villoid",type:"single",url:"villoid.com",status:"success"},
-{id:"voice",name:"Voice",type:"group",url:"",status:"success",brands:[
-  {id:"match",name:"Match",url:"matchfashion.no",status:"success"},
-  {id:"decades",name:"Decades",url:"decades.no",status:"success"},
-  {id:"vic",name:"Vic",url:"vic.no",status:"success"}
-]},
-{id:"getinspired",name:"Get Inspired",type:"single",url:"getinspired.no",status:"success"},
-{id:"bjorklund",name:"Bj\u00f8rklund",type:"single",url:"bjorklund.no",status:"success"},
-{id:"tise",name:"Tise",type:"single",url:"tise.com",status:"partial"},
-{id:"ankerstjerne",name:"Ankerstjerne",type:"single",url:"ankerstjerne.no",status:"success"},
-{id:"telenor",name:"Telenor",type:"single",url:"telenor.no",status:"manual_needed"}
-],
-allData:{
-villoid:[{pos:1,provider:"Posten",cat:"competitor",price:29,days:"2 days",desc:"Til postkasse"},{pos:2,provider:"Instabox",cat:"instabee",price:49,days:"2\u20133 days",desc:"Pakkeskap"},{pos:3,provider:"Posten",cat:"competitor",price:49,days:"1\u20132 days",desc:"Pakkeboks"},{pos:4,provider:"Posten",cat:"competitor",price:49,days:"2 days",desc:"Til Hentested"},{pos:5,provider:"Porterbuddy",cat:"instabee",price:69,days:"Same day",desc:"Bestill f\u00f8r kl 11"},{pos:6,provider:"Postnord",cat:"competitor",price:49,days:"2\u20133 days",desc:"Pakkeautomat"},{pos:7,provider:"Helthjem",cat:"competitor",price:39,days:"2\u20134 days",desc:"Til d\u00f8rmatte"}],
-getinspired:[{pos:1,provider:"Hjem i Postkassen",cat:"competitor",price:69,days:"Tomorrow",desc:"Hjem i Postkassen"},{pos:2,provider:"Pakkeboks Prioritert",cat:"competitor",price:99,days:"Tomorrow",desc:"Pakkeboks Prioritert"},{pos:3,provider:"Pakkeboks",cat:"competitor",price:69,days:"Tomorrow",desc:"Pakkeboks"},{pos:4,provider:"Hentested Prioritert",cat:"competitor",price:99,days:"Tomorrow",desc:"Hentested Prioritert"},{pos:5,provider:"Hentested",cat:"competitor",price:79,days:"Tomorrow",desc:"Hentested"},{pos:6,provider:"Instabox",cat:"instabee",price:79,days:"Fri 18 Sep",desc:"Instabox Pakkeboks"},{pos:7,provider:"Porterbuddy",cat:"instabee",price:89,days:"Fri 18 Sep",desc:"Porterbuddy Hjemlevering"},{pos:8,provider:"Posten",cat:"competitor",price:99,days:"Tomorrow",desc:"Posten Hjemlevering"}],
-bjorklund:[{pos:1,provider:"Porterbuddy",cat:"instabee",price:79,days:"Next day",desc:"Porterbuddy hjemlevering"},{pos:2,provider:"Bring",cat:"competitor",price:59,days:"2\u20133 days",desc:"Bring hentested"},{pos:3,provider:"Bring",cat:"competitor",price:99,days:"2\u20133 days",desc:"Bring hjemlevering"}],
-match:[{pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2\u20134 days",desc:"PostNord utleveringssted"},{pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"},{pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2\u20134 days",desc:"Hjemlevering"},{pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2\u20134 days",desc:"Levering til butikk"}],
-decades:[{pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2\u20134 days",desc:"PostNord utleveringssted"},{pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"},{pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2\u20134 days",desc:"Hjemlevering"},{pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2\u20134 days",desc:"Levering til butikk"}],
-vic:[{pos:1,provider:"PostNord",cat:"competitor",price:59,days:"3\u20135 days",desc:"PostNord utleveringssted"},{pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"},{pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"3\u20135 days",desc:"Hjemlevering"},{pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"3\u20135 days",desc:"Levering til butikk"}],
-tise:[
-  {pos:1,provider:"Instabox",cat:"instabee",price:29,days:"1 day",desc:"Pakkeautomat",sizeTier:"Small"},
-  {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1\u20132 days",desc:"Pakke i postkassen",sizeTier:"Small"},
-  {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"2\u20133 days",desc:"Til d\u00f8rmatte",sizeTier:"Small"},
-  {pos:1,provider:"Instabox",cat:"instabee",price:49,days:"1 day",desc:"Pakkeautomat",sizeTier:"Medium"},
-  {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1\u20132 days",desc:"Pakke i postkassen",sizeTier:"Medium"},
-  {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"2\u20133 days",desc:"Til d\u00f8rmatte",sizeTier:"Medium"},
-  {pos:1,provider:"Instabox",cat:"instabee",price:89,days:"1 day",desc:"Pakkeautomat",sizeTier:"Large"},
-  {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1\u20132 days",desc:"Pakke i postkassen",sizeTier:"Large"}
-],
-ankerstjerne:[{pos:1,provider:"Instabox",cat:"instabee",price:39,days:"2 days",desc:"Pakkeautomat Gr\u00f8nlandsleiret Extra"},{pos:2,provider:"Bring",cat:"competitor",price:39,days:"2\u20133 days",desc:"Bring Pakke i postkassen"},{pos:3,provider:"PostNord",cat:"competitor",price:49,days:"2\u20134 days",desc:"PostNord pakkeboks / Mypack small"},{pos:4,provider:"Pr\u00f8vepakke frakt",cat:"unknown",price:49,days:"2\u20134 days",desc:"Pr\u00f8vepakke frakt"},{pos:5,provider:"Helthjem",cat:"competitor",price:59,days:"2\u20133 days",desc:"Helt Hjem til postkasse/d\u00f8rmatte"},{pos:6,provider:"PostNord",cat:"competitor",price:59,days:"2\u20134 days",desc:"PostNord hentested / MyPack Collect"},{pos:7,provider:"Porterbuddy",cat:"instabee",price:90,days:"3 days",desc:"Porterbuddy levert p\u00e5 d\u00f8ren (mandag) 17:30\u201321:30"},{pos:8,provider:"Porterbuddy",cat:"instabee",price:90,days:"4 days",desc:"Porterbuddy levert p\u00e5 d\u00f8ren (tirsdag) 17:30\u201321:30"},{pos:9,provider:"Porterbuddy",cat:"instabee",price:90,days:"5 days",desc:"Porterbuddy levert p\u00e5 d\u00f8ren (onsdag) 17:30\u201321:30"}]
-},
-summaries:{
-villoid:["Instabox #2 \u2014 strong position, 20 NOK above cheapest Posten.","Porterbuddy #5 \u2014 same-day at 69 NOK. Room to negotiate higher placement.","Posten holds 3 slots (pos 1,3,4) \u2014 worth raising with Villoid."],
-getinspired:["Instabox #6 and Porterbuddy #7 \u2014 5 competitors ahead of both.","Porterbuddy (89 NOK) is the most expensive option \u2014 price cut could lift position.","Klarna iframe checkout: delivery order controlled by Klarna, not Get Inspired."],
-bjorklund:["Porterbuddy #1 \u2014 top position. \u2705","79 NOK \u2014 competitive vs Bring home delivery (99 NOK).","No Instabox present."],
-match:["Porterbuddy #2 \u2014 right after PostNord. \u2705","Real prices confirmed: 119 NOK test product (600 NOK free-ship threshold).","Porterbuddy 89 NOK ties with generic home delivery \u2014 competitive."],
-decades:["Porterbuddy #2 \u2014 right after PostNord. \u2705","Real prices confirmed: 104 NOK test product (800 NOK free-ship threshold).","Same platform and pricing as Match."],
-vic:["Porterbuddy #2 \u2014 right after PostNord. \u2705","89 NOK ties generic home delivery (pos 3).","No Instabox present."],
-tise:["Instabox #1 across all size tiers. \u2705","All providers charge the same starting price: Small 29 / Medium 49 / Large 89 NOK.","Helthjem available for Small + Medium only \u2014 not Large.","Posten available for all 3 tiers."],
-ankerstjerne:["Instabox #1 \u2014 top position at 39 NOK. \u2705","Porterbuddy #7/8/9 \u2014 three day-slots at 90 NOK each.","Geo-block fixed: Norwegian locale + Oslo geolocation in scanner."],
-telenor:["Permanent manual check \u2014 BankID blocks automation."]
-},
-scanNotes:{
-tise:"Marketplace \u2014 prices set by platform minimum per size tier. All providers charge the same starting price. Norwegian IP needed for exact per-transaction prices.",
-ankerstjerne:"Shopify. 9 delivery options. Instabox pos 1 (39 NOK), Porterbuddy pos 7\u20139 (90 NOK, 3 day-slots). Geo-block resolved.",
-telenor:"Permanent manual check \u2014 BankID required at checkout.",
-match:"Re-scanned with 119 NOK product. Free shipping threshold at Match is 600 NOK.",
-decades:"Re-scanned with 104 NOK product. Free shipping threshold at Decades is 800 NOK."
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    /* ── Lightweight Chakra UI stubs ──────────────────────────────────────────
+       Converts Chakra-style props (mb, px, bg, borderRadius…) to inline CSS
+       so the portal React component works without the real Chakra library.   */
+
+    const _sp = v => { if (v == null) return undefined; if (typeof v === 'string') return v; return (v * 4) + 'px'; };
+    const _br = v => { if (v == null) return undefined; if (typeof v === 'string') return v; return v + 'px'; };
+
+    const CHAKRA_KEYS = new Set([
+      'm','mt','mb','ml','mr','mx','my','p','pt','pb','pl','pr','px','py',
+      'w','h','minW','maxW','minH','maxH','bg','color',
+      'border','borderTop','borderBottom','borderLeft','borderRight','borderRadius','borderColor',
+      'fontSize','fontWeight','textTransform','textAlign','whiteSpace','lineHeight','fontFamily',
+      'display','overflow','overflowX','overflowY','flex','flexWrap','flexDirection',
+      'alignItems','justifyContent','cursor','verticalAlign','textDecoration',
+      'opacity','position','top','left','right','bottom','zIndex',
+      'gap','align','justify',
+    ]);
+
+    const _css = p => {
+      const s = {};
+      if (p.m  != null) s.margin = _sp(p.m);
+      if (p.mt != null) s.marginTop = _sp(p.mt);
+      if (p.mb != null) s.marginBottom = _sp(p.mb);
+      if (p.ml != null) s.marginLeft = _sp(p.ml);
+      if (p.mr != null) s.marginRight = _sp(p.mr);
+      if (p.mx != null) { s.marginLeft = _sp(p.mx); s.marginRight = _sp(p.mx); }
+      if (p.my != null) { s.marginTop = _sp(p.my); s.marginBottom = _sp(p.my); }
+      if (p.p  != null) s.padding = _sp(p.p);
+      if (p.pt != null) s.paddingTop = _sp(p.pt);
+      if (p.pb != null) s.paddingBottom = _sp(p.pb);
+      if (p.pl != null) s.paddingLeft = _sp(p.pl);
+      if (p.pr != null) s.paddingRight = _sp(p.pr);
+      if (p.px != null) { s.paddingLeft = _sp(p.px); s.paddingRight = _sp(p.px); }
+      if (p.py != null) { s.paddingTop = _sp(p.py); s.paddingBottom = _sp(p.py); }
+      if (p.w  != null) s.width = _sp(p.w);
+      if (p.h  != null) s.height = _sp(p.h);
+      if (p.minW != null) s.minWidth = _sp(p.minW);
+      if (p.maxW != null) s.maxWidth = _sp(p.maxW);
+      if (p.minH != null) s.minHeight = _sp(p.minH);
+      if (p.maxH != null) s.maxHeight = _sp(p.maxH);
+      if (p.bg   != null) s.background = p.bg;
+      if (p.color != null) s.color = p.color;
+      if (p.border != null) s.border = p.border;
+      if (p.borderTop != null) s.borderTop = p.borderTop;
+      if (p.borderBottom != null) s.borderBottom = p.borderBottom;
+      if (p.borderLeft != null) s.borderLeft = p.borderLeft;
+      if (p.borderRight != null) s.borderRight = p.borderRight;
+      if (p.borderRadius != null) s.borderRadius = _br(p.borderRadius);
+      if (p.borderColor != null) s.borderColor = p.borderColor;
+      if (p.fontSize != null) s.fontSize = p.fontSize;
+      if (p.fontWeight != null) s.fontWeight = p.fontWeight;
+      if (p.textTransform != null) s.textTransform = p.textTransform;
+      if (p.textAlign != null) s.textAlign = p.textAlign;
+      if (p.whiteSpace != null) s.whiteSpace = p.whiteSpace;
+      if (p.lineHeight != null) s.lineHeight = p.lineHeight;
+      if (p.fontFamily != null) s.fontFamily = p.fontFamily;
+      if (p.display != null) s.display = p.display;
+      if (p.overflow != null) s.overflow = p.overflow;
+      if (p.overflowX != null) s.overflowX = p.overflowX;
+      if (p.overflowY != null) s.overflowY = p.overflowY;
+      if (p.flex != null) s.flex = p.flex;
+      if (p.flexWrap != null) s.flexWrap = p.flexWrap;
+      if (p.flexDirection != null) s.flexDirection = p.flexDirection;
+      if (p.alignItems != null) s.alignItems = p.alignItems;
+      if (p.justifyContent != null) s.justifyContent = p.justifyContent;
+      if (p.cursor != null) s.cursor = p.cursor;
+      if (p.verticalAlign != null) s.verticalAlign = p.verticalAlign;
+      if (p.textDecoration != null) s.textDecoration = p.textDecoration;
+      if (p.opacity != null) s.opacity = p.opacity;
+      if (p.position != null) s.position = p.position;
+      if (p.top != null) s.top = p.top;
+      if (p.left != null) s.left = p.left;
+      if (p.right != null) s.right = p.right;
+      if (p.bottom != null) s.bottom = p.bottom;
+      if (p.zIndex != null) s.zIndex = p.zIndex;
+      return s;
+    };
+
+    const _html = props => {
+      const out = {};
+      for (const [k, v] of Object.entries(props)) {
+        if (!CHAKRA_KEYS.has(k) && k !== 'children') out[k] = v;
+      }
+      return out;
+    };
+
+    const Box = ({ children, style: sx, ...p }) =>
+      <div style={{ ..._css(p), ...sx }} {..._html(p)}>{children}</div>;
+
+    const Text = ({ children, style: sx, ...p }) =>
+      <span style={{ ..._css(p), ...sx }} {..._html(p)}>{children}</span>;
+
+    const Flex = ({ children, style: sx, gap, align, justify, ...p }) =>
+      <div style={{
+        display: 'flex',
+        ...(gap  != null ? { gap: _sp(gap) } : {}),
+        ...(align   ? { alignItems: align } : {}),
+        ...(justify ? { justifyContent: justify } : {}),
+        ..._css(p), ...sx,
+      }} {..._html(p)}>{children}</div>;
+
+    const ChakraProvider = ({ children }) => <>{children}</>;
+
+    /* ── Portal App (verbatim from Checkout Monitor Portal document) ──────── */
+
+function App() {
+  // ── WEEK REGISTRY ──────────────────────────────────────────────────────────
+  // Add a new entry here each Monday. Never remove old ones.
+  const WEEKS = ["2026-W38", "2026-W39"];
+
+  const WEEK_META = {
+    "2026-W38": { label: "Week 38", scanDate: "16 Sep 2026" },
+    "2026-W39": { label: "Week 39", scanDate: "21 Sep 2026" },
+  };
+
+  const WEEK_DATA = {
+    "2026-W38": {
+      clients: [
+        { id:"villoid",      name:"Villoid",      type:"single", url:"villoid.com",      status:"success" },
+        { id:"voice",        name:"Voice",         type:"group",  url:"",                 status:"success",
+          brands:[
+            { id:"match",   name:"Match",   url:"matchfashion.no", status:"success" },
+            { id:"decades", name:"Decades", url:"decades.no",      status:"success" },
+            { id:"vic",     name:"Vic",     url:"vic.no",          status:"success" },
+          ]
+        },
+        { id:"getinspired",  name:"Get Inspired",  type:"single", url:"getinspired.no",  status:"success" },
+        { id:"bjorklund",    name:"Bjørklund",     type:"single", url:"bjorklund.no",    status:"success" },
+        { id:"tise",         name:"Tise",           type:"single", url:"tise.com",        status:"partial" },
+        { id:"ankerstjerne", name:"Ankerstjerne",   type:"single", url:"ankerstjerne.no", status:"success" },
+        { id:"telenor",      name:"Telenor",        type:"single", url:"telenor.no",      status:"manual_needed" },
+      ],
+      allData: {
+        villoid:     [ {pos:1,provider:"Posten",cat:"competitor",price:29,days:"2 days",desc:"Til postkasse"}, {pos:2,provider:"Instabox",cat:"instabee",price:49,days:"2–3 days",desc:"Pakkeskap"}, {pos:3,provider:"Posten",cat:"competitor",price:49,days:"1–2 days",desc:"Pakkeboks"}, {pos:4,provider:"Posten",cat:"competitor",price:49,days:"2 days",desc:"Til Hentested"}, {pos:5,provider:"Porterbuddy",cat:"instabee",price:69,days:"Same day",desc:"Bestill før kl 11"}, {pos:6,provider:"Postnord",cat:"competitor",price:49,days:"18. sep",desc:"Pakkeautomat"}, {pos:7,provider:"Helthjem",cat:"competitor",price:39,days:"2–4 days",desc:"Til dørmatte"} ],
+        getinspired: [ {pos:1,provider:"Hjem i Postkassen",cat:"competitor",price:69,days:"Tomorrow",desc:"Hjem i Postkassen"}, {pos:2,provider:"Pakkeboks Prioritert",cat:"competitor",price:99,days:"Tomorrow",desc:"Pakkeboks Prioritert"}, {pos:3,provider:"Pakkeboks",cat:"competitor",price:69,days:"Tomorrow",desc:"Pakkeboks"}, {pos:4,provider:"Hentested Prioritert",cat:"competitor",price:99,days:"Tomorrow",desc:"Hentested Prioritert"}, {pos:5,provider:"Hentested",cat:"competitor",price:79,days:"Tomorrow",desc:"Hentested"}, {pos:6,provider:"Instabox",cat:"instabee",price:79,days:"Fri 18 Sep",desc:"Instabox Pakkeboks"}, {pos:7,provider:"Porterbuddy",cat:"instabee",price:89,days:"Fri 18 Sep",desc:"Porterbuddy Hjemlevering"}, {pos:8,provider:"Posten",cat:"competitor",price:99,days:"Tomorrow",desc:"Posten Hjemlevering"} ],
+        bjorklund:   [ {pos:1,provider:"Porterbuddy",cat:"instabee",price:79,days:"Next day",desc:"Porterbuddy hjemlevering"}, {pos:2,provider:"Bring",cat:"competitor",price:59,days:"2–3 days",desc:"Bring hentested"}, {pos:3,provider:"Bring",cat:"competitor",price:99,days:"2–3 days",desc:"Bring hjemlevering"} ],
+        match:       [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        decades:     [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        vic:         [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"3–5 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"3–5 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"3–5 days",desc:"Levering til butikk"} ],
+        tise:        [ {pos:1,provider:"Instabox",cat:"instabee",price:29,days:"1 day",desc:"Pakkeautomat",sizeTier:"Small"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1–2 days",desc:"Pakke i postkassen",sizeTier:"Small"}, {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"2–3 days",desc:"Til dørmatte",sizeTier:"Small"}, {pos:1,provider:"Instabox",cat:"instabee",price:49,days:"1 day",desc:"Pakkeautomat",sizeTier:"Medium"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1–2 days",desc:"Pakke i postkassen",sizeTier:"Medium"}, {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"2–3 days",desc:"Til dørmatte",sizeTier:"Medium"}, {pos:1,provider:"Instabox",cat:"instabee",price:89,days:"1 day",desc:"Pakkeautomat",sizeTier:"Large"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1–2 days",desc:"Pakke i postkassen",sizeTier:"Large"} ],
+        ankerstjerne: [ {pos:1,provider:"Instabox",cat:"instabee",price:39,days:"2 days",desc:"Pakkeautomat Grønlandsleiret Extra"}, {pos:2,provider:"Bring",cat:"competitor",price:39,days:"2–3 days",desc:"Bring Pakke i postkassen"}, {pos:3,provider:"PostNord",cat:"competitor",price:49,days:"2–4 days",desc:"PostNord pakkeboks / Mypack small"}, {pos:4,provider:"Prøvepakke frakt",cat:"unknown",price:49,days:"2–4 days",desc:"Prøvepakke frakt"}, {pos:5,provider:"Helthjem",cat:"competitor",price:59,days:"2–3 days",desc:"Helt Hjem til postkasse/dørmatte"}, {pos:6,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord hentested / MyPack Collect"}, {pos:7,provider:"Porterbuddy",cat:"instabee",price:90,days:"3 days",desc:"Porterbuddy levert på døren (mandag) 17:30–21:30"}, {pos:8,provider:"Porterbuddy",cat:"instabee",price:90,days:"4 days",desc:"Porterbuddy levert på døren (tirsdag) 17:30–21:30"}, {pos:9,provider:"Porterbuddy",cat:"instabee",price:90,days:"5 days",desc:"Porterbuddy levert på døren (onsdag) 17:30–21:30"} ],
+      },
+      summaries: {
+        villoid:     ["Instabox #2 — strong position, 20 NOK above cheapest Posten.","Porterbuddy #5 — same-day at 69 NOK. Room to negotiate higher placement.","Posten holds 3 slots (pos 1,3,4) — worth raising with Villoid."],
+        getinspired: ["Instabox #6 and Porterbuddy #7 — 5 competitors ahead of both.","Porterbuddy (89 NOK) is the most expensive option — price cut could lift position.","Klarna iframe checkout: delivery order controlled by Klarna, not Get Inspired."],
+        bjorklund:   ["Porterbuddy #1 — top position. ✅","79 NOK — competitive vs Bring home delivery (99 NOK).","No Instabox present."],
+        match:       ["Porterbuddy #2 — right after PostNord. ✅","Real prices confirmed: 119 NOK test product (600 NOK free-ship threshold).","Porterbuddy 89 NOK ties with generic home delivery — competitive."],
+        decades:     ["Porterbuddy #2 — right after PostNord. ✅","Real prices confirmed: 104 NOK test product (800 NOK free-ship threshold).","Same platform and pricing as Match."],
+        vic:         ["Porterbuddy #2 — right after PostNord. ✅","89 NOK ties generic home delivery (pos 3).","No Instabox present."],
+        tise:        ["Instabox #1 and cheapest across all size tiers. ✅","Instabox only: Small 29 / Medium 49 / Large 89 NOK.","Posten + Helthjem available but charge more — exact prices need Norwegian IP to confirm.","Helthjem available for Small + Medium only — not Large."],
+        ankerstjerne:["Instabox #1 — top position at 39 NOK. ✅","Porterbuddy #7/8/9 — three day-slots at 90 NOK each.","Geo-block fixed: Norwegian locale + Oslo geolocation in scanner."],
+        telenor:     ["Permanent manual check — BankID blocks automation."],
+      },
+      scanNotes: {
+        tise: "Marketplace. Instabox is cheapest: Small 29 NOK, Medium 49 NOK, Large 89 NOK. Posten and Helthjem also available but charge higher prices — exact competitor prices require Norwegian IP.",
+        ankerstjerne: "Shopify. 9 delivery options. Instabox pos 1 (39 NOK), Porterbuddy pos 7–9 (90 NOK, 3 day-slots). Geo-block resolved.",
+        telenor: "Permanent manual check — BankID required at checkout.",
+        match: "Re-scanned with 119 NOK product. Free shipping threshold at Match is 600 NOK.",
+        decades: "Re-scanned with 104 NOK product. Free shipping threshold at Decades is 800 NOK.",
+      },
+    },
+    "2026-W39": {
+      clients: [
+        { id:"villoid",      name:"Villoid",      type:"single", url:"villoid.com",      status:"success" },
+        { id:"voice",        name:"Voice",         type:"group",  url:"",                 status:"partial",
+          brands:[
+            { id:"match",   name:"Match",   url:"matchfashion.no", status:"success" },
+            { id:"decades", name:"Decades", url:"decades.no",      status:"success" },
+            { id:"vic",     name:"Vic",     url:"vic.no",          status:"partial" },
+          ]
+        },
+        { id:"getinspired",  name:"Get Inspired",  type:"single", url:"getinspired.no",  status:"success" },
+        { id:"bjorklund",    name:"Bjørklund",     type:"single", url:"bjorklund.no",    status:"success" },
+        { id:"tise",         name:"Tise",           type:"single", url:"tise.com",        status:"partial" },
+        { id:"ankerstjerne", name:"Ankerstjerne",   type:"single", url:"ankerstjerne.no", status:"success" },
+        { id:"telenor",      name:"Telenor",        type:"single", url:"telenor.no",      status:"manual_needed" },
+      ],
+      allData: {
+        villoid:     [ {pos:1,provider:"Posten",cat:"competitor",price:29,days:"2 days",desc:"Til postkasse"}, {pos:2,provider:"Instabox",cat:"instabee",price:49,days:"2–3 days",desc:"Pakkeskap"}, {pos:3,provider:"Posten",cat:"competitor",price:49,days:"1–2 days",desc:"Pakkeboks"}, {pos:4,provider:"Posten",cat:"competitor",price:49,days:"2 days",desc:"Til Hentested"}, {pos:5,provider:"Porterbuddy",cat:"instabee",price:69,days:"Same day",desc:"Bestill før kl 11"}, {pos:6,provider:"Postnord",cat:"competitor",price:49,days:"23 Sep",desc:"Pakkeautomat"}, {pos:7,provider:"Helthjem",cat:"competitor",price:39,days:"2–4 days",desc:"Til dørmatte"} ],
+        getinspired: [ {pos:1,provider:"Hjem i Postkassen",cat:"competitor",price:69,days:"Tomorrow",desc:"Hjem i Postkassen"}, {pos:2,provider:"Pakkeboks Prioritert",cat:"competitor",price:99,days:"Tomorrow",desc:"Pakkeboks Prioritert"}, {pos:3,provider:"Pakkeboks",cat:"competitor",price:69,days:"Tomorrow",desc:"Pakkeboks"}, {pos:4,provider:"Hentested Prioritert",cat:"competitor",price:99,days:"Tomorrow",desc:"Hentested Prioritert"}, {pos:5,provider:"Hentested",cat:"competitor",price:79,days:"Tomorrow",desc:"Hentested"}, {pos:6,provider:"Instabox",cat:"instabee",price:79,days:"Tomorrow",desc:"Instabox Pakkeboks"}, {pos:7,provider:"Porterbuddy",cat:"instabee",price:89,days:"Tomorrow",desc:"Porterbuddy Hjemlevering"}, {pos:8,provider:"Posten",cat:"competitor",price:99,days:"Tomorrow",desc:"Posten Hjemlevering"} ],
+        bjorklund:   [ {pos:1,provider:"Porterbuddy",cat:"instabee",price:79,days:"Next day",desc:"Porterbuddy hjemlevering"}, {pos:2,provider:"Bring",cat:"competitor",price:59,days:"2–3 days",desc:"Bring hentested"}, {pos:3,provider:"Bring",cat:"competitor",price:99,days:"2–3 days",desc:"Bring hjemlevering"} ],
+        match:       [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        decades:     [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        vic:         [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted (inferred)"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy hjemlevering (inferred)"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering (inferred)"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk (inferred)"} ],
+        tise:        [ {pos:1,provider:"Instabox",cat:"instabee",price:29,days:"1 day",desc:"Pakkeautomat",sizeTier:"Small"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1–2 days",desc:"Pakke i postkassen",sizeTier:"Small"}, {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"2–3 days",desc:"Til dørmatte",sizeTier:"Small"}, {pos:1,provider:"Instabox",cat:"instabee",price:49,days:"1 day",desc:"Pakkeautomat",sizeTier:"Medium"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1–2 days",desc:"Pakke i postkassen",sizeTier:"Medium"}, {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"2–3 days",desc:"Til dørmatte",sizeTier:"Medium"}, {pos:1,provider:"Instabox",cat:"instabee",price:89,days:"1 day",desc:"Pakkeautomat",sizeTier:"Large"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"1–2 days",desc:"Pakke i postkassen",sizeTier:"Large"} ],
+        ankerstjerne: [ {pos:1,provider:"Instabox",cat:"instabee",price:39,days:"Tomorrow",desc:"Pakkeautomat Grønlandsleiret Extra"}, {pos:2,provider:"Bring",cat:"competitor",price:39,days:"2–3 days",desc:"Bring Pakke i postkassen"}, {pos:3,provider:"PostNord",cat:"competitor",price:49,days:"2–4 days",desc:"PostNord pakkeboks / Mypack small"}, {pos:4,provider:"Prøvepakke frakt",cat:"unknown",price:49,days:"2–4 days",desc:"Prøvepakke frakt"}, {pos:5,provider:"Helthjem",cat:"competitor",price:59,days:"2–3 days",desc:"Helt Hjem til postkasse/dørmatte"}, {pos:6,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord hentested / MyPack Collect"}, {pos:7,provider:"Porterbuddy",cat:"instabee",price:90,days:"Today",desc:"Porterbuddy levert på døren (mandag) 17:30–21:30"}, {pos:8,provider:"Porterbuddy",cat:"instabee",price:90,days:"Tomorrow",desc:"Porterbuddy levert på døren (tirsdag) 17:30–21:30"}, {pos:9,provider:"Porterbuddy",cat:"instabee",price:90,days:"+2 days",desc:"Porterbuddy levert på døren (onsdag) 17:30–21:30"} ],
+      },
+      summaries: {
+        villoid:     ["Instabox #2 — strong position, 20 NOK above cheapest Posten. No change from W38.","Porterbuddy #5 — same-day at 69 NOK. Room to negotiate higher placement.","Posten holds 3 slots (pos 1,3,4) — worth raising with Villoid."],
+        getinspired: ["Instabox #6 and Porterbuddy #7 — 5 competitors ahead of both. No change from W38.","Porterbuddy (89 NOK) is the most expensive option — price cut could lift position.","Klarna/Kustom iframe checkout: delivery order controlled by Klarna, not Get Inspired."],
+        bjorklund:   ["Porterbuddy #1 — top position. ✅ No change from W38.","79 NOK — competitive vs Bring home delivery (99 NOK).","No Instabox present."],
+        match:       ["Porterbuddy #2 — right after PostNord. ✅ No change from W38.","Real prices confirmed: 119 NOK test product (600 NOK free-ship threshold).","Porterbuddy 89 NOK ties with generic home delivery — competitive."],
+        decades:     ["Porterbuddy #2 — right after PostNord. ✅ No change from W38.","Real prices confirmed: 119 NOK test product (800 NOK free-ship threshold).","Same platform and pricing as Match."],
+        vic:         ["⚠ Partial scan — Lloyd Chinos dark-navy sold out. Delivery options inferred from Match/Decades (same platform).","Porterbuddy likely #2 at 89 NOK — confirm with new product URL next week.","No Instabox present."],
+        tise:        ["Instabox #1 and cheapest across all size tiers. ✅ No change from W38.","Instabox only: Small 29 / Medium 49 / Large 89 NOK.","Posten + Helthjem available but charge more — exact prices need Norwegian IP to confirm.","Helthjem available for Small + Medium only — not Large."],
+        ankerstjerne:["Instabox #1 — top position at 39 NOK. ✅ No change from W38.","Porterbuddy #7/8/9 — three day-slots at 90 NOK each.","9 confirmed options."],
+        telenor:     ["Permanent manual check — BankID blocks automation."],
+      },
+      scanNotes: {
+        tise: "Marketplace. Instabox confirmed: Small 29 NOK, Medium 49 NOK, Large 89 NOK. WAF blocks buyer flow from cloud IPs — competitor prices unavailable without Norwegian IP.",
+        ankerstjerne: "Shopify. 9 delivery options. Instabox pos 1 (39 NOK), Porterbuddy pos 7–9 (90 NOK, 3 day-slots).",
+        telenor: "Permanent manual check — BankID required at checkout.",
+        match: "Scanned with 119 NOK product (on sale). Free shipping threshold at Match is 600 NOK.",
+        decades: "Scanned with 119 NOK product (on sale). Free shipping threshold at Decades is 800 NOK.",
+        vic: "All sizes of Lloyd Chinos (dark-navy) sold out — could not add to cart. Delivery options inferred from Match/Decades (same Voice/Jean Paul checkout platform). Update product URL for next scan.",
+        getinspired: "Product URL updated to Meraki Hand Soap 490ml (previous product unavailable). Klarna/Kustom iframe checkout. All 8 options confirmed unchanged from W38.",
+      },
+    },
+  };
+
+  // ── STATE ───────────────────────────────────────────────────────────────────
+  const [activeWeek, setActiveWeek]       = useState(WEEKS[WEEKS.length - 1]);
+  const [activeClientId, setActiveClientId] = useState("villoid");
+  const [activeBrandId, setActiveBrandId]   = useState(null);
+  const [lightbox, setLightbox]             = useState(null);
+
+  const wd = WEEK_DATA[activeWeek];
+  const { clients, allData, summaries, scanNotes } = wd;
+  const activeClient = clients.find(c => c.id === activeClientId);
+  const isGroup = activeClient?.type === "group";
+
+  const getDataForId = id => allData[id] || [];
+
+  // ── HELPERS ─────────────────────────────────────────────────────────────────
+  const sc   = s => s==="success"?"#22c55e":s==="partial"?"#f59e0b":"#ef4444";
+  const sBg  = s => s==="success"?"#dcfce7":s==="partial"?"#fef3c7":"#fee2e2";
+  const sTxt = s => s==="success"?"#16a34a":s==="partial"?"#d97706":"#dc2626";
+  const sLbl = s => s==="success"?"✓ Scanned":s==="partial"?"⚠ Partial":s==="manual_needed"?"✋ Manual":"✗ Error";
+  const dot  = s => <span style={{display:"inline-block",width:7,height:7,borderRadius:"50%",background:sc(s),marginLeft:5,verticalAlign:"middle"}}/>;
+  const priceStr = p => p===0?"Free":`${p} NOK`;
+  const posCircle = pos => ({display:"inline-flex",alignItems:"center",justifyContent:"center",width:24,height:24,borderRadius:"50%",fontWeight:700,fontSize:11,background:pos===1?"#fbbf24":pos===2?"#d1d5db":"#f3f4f6",color:"#111827",flexShrink:0});
+  const iBadge = {display:"inline-block",padding:"1px 6px",borderRadius:999,fontSize:10,fontWeight:700,background:"#16a34a",color:"white",marginLeft:4};
+
+  // ── GROUP OVERVIEW ───────────────────────────────────────────────────────────
+  const renderGroupOverview = () => (
+    <Box>
+      <Box mb={3}><Text fontSize="14px" fontWeight={700} color="#0f172a">{activeClient.name} — All brands</Text><Text fontSize="12px" color="#64748b">Click a row to drill in</Text></Box>
+      <Box bg="white" border="1px solid #e2e8f0" borderRadius="10px" overflow="hidden">
+        <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+          <thead><tr style={{background:"#f8fafc",borderBottom:"1px solid #e2e8f0"}}>
+            {["Brand","Porterbuddy","Instabox","Cheapest competitor","Options","Status",""].map(h=><th key={h} style={{padding:"8px 14px",textAlign:"left",color:"#64748b",fontWeight:600,fontSize:11,textTransform:"uppercase"}}>{h}</th>)}
+          </tr></thead>
+          <tbody>
+            {activeClient.brands.map(brand => {
+              const data = getDataForId(brand.id);
+              const pb = data.find(d=>d.provider==="Porterbuddy");
+              const ib = data.find(d=>d.provider==="Instabox");
+              const cc = data.filter(d=>d.cat==="competitor").sort((a,b)=>a.price-b.price)[0];
+              return (
+                <tr key={brand.id} onClick={()=>setActiveBrandId(brand.id)} style={{borderBottom:"1px solid #f1f5f9",cursor:"pointer"}}
+                  onMouseEnter={e=>e.currentTarget.style.background="#f8fafc"} onMouseLeave={e=>e.currentTarget.style.background="white"}>
+                  <td style={{padding:"10px 14px"}}><Text fontWeight={600} color="#0f172a">{brand.name}</Text><Text fontSize="11px" color="#94a3b8">{brand.url}</Text></td>
+                  <td style={{padding:"10px 14px"}}>{pb?<Flex align="center" gap={2}><span style={posCircle(pb.pos)}>{pb.pos}</span><Text fontSize="12px" color="#16a34a" fontWeight={600}>{priceStr(pb.price)}</Text></Flex>:<Text color="#cbd5e1" fontSize="12px">—</Text>}</td>
+                  <td style={{padding:"10px 14px"}}>{ib?<Flex align="center" gap={2}><span style={posCircle(ib.pos)}>{ib.pos}</span><Text fontSize="12px" color="#16a34a" fontWeight={600}>{priceStr(ib.price)}</Text></Flex>:<Text color="#cbd5e1" fontSize="12px">—</Text>}</td>
+                  <td style={{padding:"10px 14px"}}>{cc?<Text fontSize="12px" color="#64748b">{cc.provider} — {priceStr(cc.price)}</Text>:<Text color="#cbd5e1" fontSize="12px">—</Text>}</td>
+                  <td style={{padding:"10px 14px"}}><Text fontWeight={600}>{data.length||"—"}</Text></td>
+                  <td style={{padding:"10px 14px"}}><Box display="inline-block" px={2} py="2px" bg={sBg(brand.status)} borderRadius={999} fontSize={11} fontWeight={600} color={sTxt(brand.status)}>{sLbl(brand.status)}</Box></td>
+                  <td style={{padding:"10px 14px",textAlign:"right"}}><Text fontSize="12px" color="#7c3aed" fontWeight={600}>View →</Text></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Box>
+    </Box>
+  );
+
+  // ── DETAIL VIEW ──────────────────────────────────────────────────────────────
+  const renderDetail = (id, url, status) => {
+    const data = getDataForId(id);
+    const instabeeRows = data.filter(d=>d.cat==="instabee");
+    const note = scanNotes[id];
+    const isTise = id==="tise";
+    const wMeta = WEEK_META[activeWeek];
+
+    if ((status!=="success"&&status!=="partial")||(data.length===0&&status!=="partial")) {
+      return (
+        <Box bg="white" border="1px solid #e2e8f0" borderRadius="10px" p={8} textAlign="center">
+          <Text fontSize="36px" mb={3}>{status==="manual_needed"?"⚠️":"❌"}</Text>
+          <Text fontWeight={700} color="#0f172a" fontSize="16px">{status==="manual_needed"?"Manual check required":"No data"}</Text>
+          <Text color="#64748b" fontSize="13px" mt={1}>{url}</Text>
+          {note&&<Box mt={4} bg="#fef9ef" border="1px solid #fde68a" borderRadius="8px" p={4} textAlign="left" maxW={520} mx="auto"><Text fontSize="12px" color="#78350f">{note}</Text></Box>}
+        </Box>
+      );
+    }
+    if (!data.length) return <Box bg="white" border="1px solid #e2e8f0" borderRadius="10px" p={8} textAlign="center"><Text fontSize="36px">⚠️</Text><Text fontWeight={700}>Partial scan</Text>{note&&<Box mt={4} bg="#fef9ef" border="1px solid #fde68a" borderRadius="8px" p={4}><Text fontSize="12px" color="#78350f">{note}</Text></Box>}</Box>;
+
+    const minPrice = Math.min(...data.map(d=>d.price));
+    const cheapest = data.find(d=>d.price===minPrice);
+
+    return (
+      <Box>
+        {/* Stat cards */}
+        <Flex gap={3} mb={4} flexWrap="wrap">
+          <Box bg="white" border="1px solid #e2e8f0" borderRadius="10px" p={4} flex="1" minW="100px">
+            <Text fontSize="11px" color="#64748b" fontWeight={600} textTransform="uppercase">Options</Text>
+            <Text fontSize="28px" fontWeight={700} color="#0f172a">{isTise?"3 tiers":data.length}</Text>
+          </Box>
+          {instabeeRows.map((r,i)=>(
+            <Box key={i} bg="#f0fdf4" border="1px solid #bbf7d0" borderRadius="10px" p={4} flex="1" minW="100px">
+              <Text fontSize="11px" color="#16a34a" fontWeight={600} textTransform="uppercase">{r.provider}{isTise?` (${r.sizeTier})`:""}</Text>
+              <Text fontSize="28px" fontWeight={700} color="#16a34a">#{r.pos}</Text>
+              <Text fontSize="12px" color="#4ade80">{priceStr(r.price)} · {r.days}</Text>
+            </Box>
+          ))}
+          <Box bg="white" border="1px solid #e2e8f0" borderRadius="10px" p={4} flex="1" minW="100px">
+            <Text fontSize="11px" color="#64748b" fontWeight={600} textTransform="uppercase">Cheapest</Text>
+            <Text fontSize="28px" fontWeight={700} color="#0f172a">{priceStr(minPrice)}</Text>
+            <Text fontSize="12px" color="#94a3b8">{cheapest?.provider} (pos {cheapest?.pos})</Text>
+          </Box>
+        </Flex>
+
+        {/* Key observations */}
+        {summaries[id]?.length>0&&(
+          <Box mb={4} bg="#fffbeb" border="1px solid #fde68a" borderRadius="10px" p={4}>
+            <Text fontWeight={600} color="#92400e" mb={2} fontSize="13px">💡 Key observations — {wMeta.label}</Text>
+            {summaries[id].map((l,i)=><Text key={i} fontSize="12px" color="#78350f" mt={i?1:0}>• {l}</Text>)}
+          </Box>
+        )}
+
+        {note&&<Box mb={4} bg="#fffbeb" border="1px solid #fde68a" borderRadius="8px" p={3}><Text fontSize="12px" color="#78350f">ℹ️ {note}</Text></Box>}
+
+        {/* Delivery table */}
+        <Box bg="white" border="1px solid #e2e8f0" borderRadius="10px" overflow="hidden">
+          <Box px={5} py={3} borderBottom="1px solid #f1f5f9" bg="#fafafa">
+            <Text fontWeight={600} color="#0f172a" fontSize="14px">Delivery options</Text>
+          </Box>
+          <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+            <thead><tr style={{background:"#f8fafc",borderBottom:"1px solid #e2e8f0"}}>
+              {(isTise?["Size tier","Provider","Min. price","Options included","Lead time"]:["#","Provider","Lead time","Price"]).map((h,i)=>(
+                <th key={h} style={{padding:"8px 14px",textAlign:i===(isTise?4:3)?"right":"left",color:"#64748b",fontWeight:600,fontSize:11,textTransform:"uppercase"}}>{h}</th>
+              ))}
+            </tr></thead>
+            <tbody>
+              {data.map((row,idx)=>(
+                <tr key={idx} style={{background:row.cat==="instabee"?"#f0fdf4":"white",borderBottom:"1px solid #f1f5f9"}}>
+                  {isTise?(
+                    <>
+                      <td style={{padding:"9px 14px",fontWeight:600,color:"#374151"}}>{row.sizeTier}</td>
+                      <td style={{padding:"9px 14px"}}><Text fontWeight={600} color="#16a34a">{row.provider}</Text><span style={iBadge}>instabee</span></td>
+                      <td style={{padding:"9px 14px",fontWeight:700,color:"#16a34a"}}>From {priceStr(row.price)}</td>
+                      <td style={{padding:"9px 14px",color:"#6b7280",fontSize:12}}>{row.desc}</td>
+                      <td style={{padding:"9px 14px",textAlign:"right",color:"#6b7280",fontSize:12}}>{row.days}</td>
+                    </>
+                  ):(
+                    <>
+                      <td style={{padding:"9px 14px"}}><span style={posCircle(row.pos)}>{row.pos}</span></td>
+                      <td style={{padding:"9px 14px"}}>
+                        <Flex align="center" gap={1}><Text fontWeight={600} color="#0f172a">{row.provider}</Text>{row.cat==="instabee"&&<span style={iBadge}>instabee</span>}</Flex>
+                        <Text fontSize="11px" color="#64748b">{row.desc}</Text>
+                      </td>
+                      <td style={{padding:"9px 14px",color:"#6b7280",fontSize:12}}>{row.days}</td>
+                      <td style={{padding:"9px 14px",textAlign:"right",fontWeight:700,color:"#0f172a"}}>{priceStr(row.price)}</td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Box>
+      </Box>
+    );
+  };
+
+  const renderContent = () => {
+    if (isGroup) {
+      if (!activeBrandId||activeBrandId==="overview") return renderGroupOverview();
+      const brand = activeClient.brands.find(b=>b.id===activeBrandId);
+      return renderDetail(brand.id, brand.url, brand.status);
+    }
+    return renderDetail(activeClient.id, activeClient.url, activeClient.status);
+  };
+
+  const allEntities = [...clients.filter(c=>c.type==="single"),...clients.filter(c=>c.type==="group").flatMap(g=>g.brands)];
+  const scanned = allEntities.filter(e=>e.status==="success").length;
+  const issues  = allEntities.filter(e=>e.status!=="success").length;
+
+  const wMeta = WEEK_META[activeWeek];
+
+  return (
+    <Box fontFamily="system-ui,sans-serif" bg="#f1f5f9" minH="100vh">
+      {/* Header */}
+      <Box bg="white" borderBottom="1px solid #e2e8f0" px={6} py={4}>
+        <Flex align="center" justify="space-between" flexWrap="wrap" gap={3}>
+          <Box>
+            <Text fontSize="18px" fontWeight={800} color="#0f172a">📦 Checkout Monitor — Norway</Text>
+            <Text fontSize="12px" color="#64748b">Instabee · Porterbuddy & Instabox · Weekly scan</Text>
+          </Box>
+          <Flex gap={3} align="center">
+            {/* Week selector */}
+            <Flex gap={1}>
+              {WEEKS.map(w=>(
+                <Box key={w} onClick={()=>{setActiveWeek(w);setActiveClientId("villoid");setActiveBrandId(null);}}
+                  cursor="pointer" px={3} py={1} borderRadius="8px"
+                  bg={activeWeek===w?"#7c3aed":"#f1f5f9"}
+                  color={activeWeek===w?"white":"#64748b"}
+                  fontSize="13px" fontWeight={activeWeek===w?700:400}>
+                  {WEEK_META[w].label}
+                </Box>
+              ))}
+            </Flex>
+            <Box textAlign="center" px={3} py={1} bg="#dcfce7" borderRadius="8px">
+              <Text fontSize="16px" fontWeight={700} color="#16a34a">{scanned}</Text>
+              <Text fontSize="10px" color="#16a34a" fontWeight={600}>SCANNED</Text>
+            </Box>
+            <Box textAlign="center" px={3} py={1} bg="#fef3c7" borderRadius="8px">
+              <Text fontSize="16px" fontWeight={700} color="#d97706">{issues}</Text>
+              <Text fontSize="10px" color="#d97706" fontWeight={600}>ISSUES</Text>
+            </Box>
+          </Flex>
+        </Flex>
+        <Text fontSize="11px" color="#94a3b8" mt={1}>Scan date: {wMeta.scanDate}</Text>
+      </Box>
+
+      {/* Client tabs */}
+      <Box bg="white" borderBottom="1px solid #e2e8f0" px={6} overflowX="auto">
+        <Flex gap={0}>
+          {clients.map(c=>{
+            const active = activeClientId===c.id;
+            const s = c.type==="group"?(c.brands.every(b=>b.status==="success")?"success":"partial"):c.status;
+            return (
+              <Box key={c.id} onClick={()=>{setActiveClientId(c.id);setActiveBrandId(c.type==="group"?"overview":null);}} cursor="pointer"
+                px={4} py={3} borderBottom={active?"2px solid #7c3aed":"2px solid transparent"}
+                color={active?"#7c3aed":"#64748b"} fontWeight={active?600:400} fontSize="13px" whiteSpace="nowrap">
+                {c.name}{c.type==="group"&&<span style={{fontSize:10,color:"#9ca3af",marginLeft:3}}>▾</span>}{dot(s)}
+              </Box>
+            );
+          })}
+        </Flex>
+      </Box>
+
+      {/* Group sub-tabs */}
+      {isGroup&&(
+        <Box bg="#f8fafc" borderBottom="1px solid #e2e8f0" px={8} overflowX="auto">
+          <Flex gap={0} align="center">
+            <Text fontSize="11px" color="#94a3b8" fontWeight={600} mr={3}>{activeClient.name}:</Text>
+            {["overview",...activeClient.brands.map(b=>b.id)].map(id=>{
+              const brand = id==="overview"?null:activeClient.brands.find(b=>b.id===id);
+              const lbl = id==="overview"?"Overview":brand.name;
+              const active = (activeBrandId||"overview")===id;
+              return (
+                <Box key={id} onClick={()=>setActiveBrandId(id)} cursor="pointer" px={3} py={2}
+                  borderBottom={active?"2px solid #0ea5e9":"2px solid transparent"}
+                  color={active?"#0369a1":"#64748b"} fontWeight={active?600:400} fontSize="12px" whiteSpace="nowrap">
+                  {lbl}{brand&&dot(brand.status)}
+                </Box>
+              );
+            })}
+          </Flex>
+        </Box>
+      )}
+
+      <Box p={6}>{renderContent()}</Box>
+
+      <Box textAlign="center" py={4} color="#94a3b8" fontSize="11px" borderTop="1px solid #e2e8f0">
+        Checkout Monitor · Instabee Norway · Data updated weekly every Monday
+      </Box>
+    </Box>
+  );
 }
-}};
-let activeWeek=WEEKS[WEEKS.length-1],activeClientId="villoid",activeBrandId=null;
-const priceStr=p=>(p===null||p===undefined)?"&#x2014;":p===0?"Free":p+" NOK";
-const posClass=p=>p===1?"pos-1":p===2?"pos-2":"pos-n";
-const statusDotClass=s=>s==="success"?"dot-success":s==="partial"?"dot-partial":"dot-manual";
-const statusPillClass=s=>s==="success"?"pill-success":s==="partial"?"pill-partial":"pill-manual";
-const statusLabel=s=>s==="success"?"&#x2713; Scanned":s==="partial"?"&#x26A0; Partial":"&#x270B; Manual";
-function openLightbox(src){document.getElementById("lightboxImg").src=src;document.getElementById("lightbox").classList.add("open");}
-function getWD(){return WEEK_DATA[activeWeek];}
-function renderAll(){renderWeekTabs();renderSidebar();renderContent();renderBadges();}
-function renderWeekTabs(){var el=document.getElementById("weekTabs");el.innerHTML=WEEKS.map(function(w){return'<button class="week-tab'+(activeWeek===w?" active":"")+'" onclick="switchWeek(\''+w+'\')">'+WEEK_META[w].label+"</button>";}).join("");}
-function renderBadges(){var wd=getWD();var all=[];wd.clients.forEach(function(c){if(c.type==="group")c.brands.forEach(function(b){all.push(b);});else all.push(c);});document.getElementById("scannedCount").textContent=all.filter(function(e){return e.status==="success";}).length;document.getElementById("issueCount").textContent=all.filter(function(e){return e.status!=="success";}).length;}
-function renderSidebar(){var wd=getWD();document.getElementById("sidebar").innerHTML=wd.clients.map(function(c){return'<button class="sidebar-item'+(activeClientId===c.id?" active":"")+'" onclick="switchClient(\''+c.id+'\')"><span class="sidebar-dot '+statusDotClass(c.status)+'"></span>'+c.name+"</button>";}).join("");}
-function renderContent(){var wd=getWD();var client=wd.clients.find(function(c){return c.id===activeClientId;});var el=document.getElementById("content");if(!client)return;if(client.type==="group"){if(!activeBrandId||activeBrandId==="overview"){el.innerHTML=renderGroupOverview(client,wd);}else{var brand=client.brands.find(function(b){return b.id===activeBrandId;});el.innerHTML='<button class="drill-back" onclick="activeBrandId=null;renderAll()">&#x2190; Back to '+client.name+"</button>"+renderDetail(brand.id,brand.url,brand.status,wd);}}else{el.innerHTML=renderDetail(client.id,client.url,client.status,wd);}}
-function renderGroupOverview(client,wd){var rows=client.brands.map(function(brand){var data=wd.allData[brand.id]||[];var pb=data.find(function(d){return d.provider==="Porterbuddy";});var ib=data.find(function(d){return d.provider==="Instabox";});var cc=data.filter(function(d){return d.cat==="competitor";}).sort(function(a,b){return a.price-b.price;})[0];return'<tr class="group-row" onclick="activeBrandId=\''+brand.id+'\';renderAll()"><td><span class="provider-name">'+brand.name+'</span><div class="provider-desc">'+brand.url+"</div></td><td>"+(pb?'<span class="pos-circle '+posClass(pb.pos)+'">'+pb.pos+"</span> "+'<span style="color:#16a34a;font-weight:600;font-size:12px">'+priceStr(pb.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+"</td><td>"+(ib?'<span class="pos-circle '+posClass(ib.pos)+'">'+ib.pos+"</span> "+'<span style="color:#16a34a;font-weight:600;font-size:12px">'+priceStr(ib.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+"</td><td>"+(cc?'<span style="font-size:12px;color:#64748b">'+cc.provider+" &mdash; "+priceStr(cc.price)+"</span>":'<span style="color:#cbd5e1">&mdash;</span>')+'</td><td><span class="status-pill '+statusPillClass(brand.status)+'">'+statusLabel(brand.status)+'</span></td><td style="text-align:right;font-size:12px;color:#7c3aed;font-weight:600">View &rarr;</td></tr>';}).join("");return'<div style="margin-bottom:12px"><span style="font-size:14px;font-weight:700;color:#0f172a">'+client.name+' &mdash; All brands</span><span style="font-size:12px;color:#64748b;margin-left:8px">Click a row to drill in</span></div><div class="table-wrap"><table><thead><tr><th>Brand</th><th>Porterbuddy</th><th>Instabox</th><th>Cheapest competitor</th><th>Status</th><th class="right"></th></tr></thead><tbody>'+rows+"</tbody></table></div>";}
-function renderScreenshot(id){var shots=SCREENSHOTS[activeWeek];if(!shots||!shots[id])return"";return'<div class="screenshot-wrap"><div class="table-header">Checkout screenshot &#x2014; click to enlarge</div><img src="'+shots[id]+'" alt="'+id+' checkout" onclick="openLightbox(this.src)" loading="lazy"/></div>';}
-function renderDetail(id,url,status,wd){var data=wd.allData[id]||[];var note=wd.scanNotes[id];var summary=wd.summaries[id]||[];var isTise=id==="tise";var wMeta=WEEK_META[activeWeek];if(status==="manual_needed"||(data.length===0&&status!=="partial")){return'<div class="empty-state"><div class="empty-icon">'+(status==="manual_needed"?"&#x26A0;&#xFE0F;":"&#x274C;")+'</div><div class="empty-title">'+(status==="manual_needed"?"Manual check required":"No data")+'</div><div class="empty-url">'+url+"</div>"+(note?'<div class="note-box" style="margin-top:16px;max-width:520px;margin-left:auto;margin-right:auto">&#x2139;&#xFE0F; '+note+"</div>":"")+"</div>";}
-var instabeeRows=data.filter(function(d){return d.cat==="instabee";});
-var minPrice,cheapest;
-if(isTise){minPrice=29;cheapest={provider:"Instabox",pos:1};}
-else{var prices=data.map(function(d){return d.price;});minPrice=Math.min.apply(null,prices);cheapest=data.find(function(d){return d.price===minPrice;});}
-var uniqueInstabee=[];var seen={};instabeeRows.forEach(function(r){if(!seen[r.sizeTier||r.provider]){seen[r.sizeTier||r.provider]=true;uniqueInstabee.push(r);}});
-var statCards='<div class="stat-cards"><div class="stat-card"><div class="stat-label">Options</div><div class="stat-value">'+(isTise?"3 tiers":data.length)+"</div></div>"+uniqueInstabee.slice(0,3).map(function(r){return'<div class="stat-card green"><div class="stat-label green">Instabox'+(isTise?" "+r.sizeTier:"")+'</div><div class="stat-value green">#'+r.pos+'</div><div class="stat-sub green">'+priceStr(r.price)+" &middot; "+r.days+"</div></div>";}).join("")+'<div class="stat-card"><div class="stat-label">Cheapest</div><div class="stat-value">'+priceStr(minPrice)+'</div><div class="stat-sub">'+(cheapest?cheapest.provider:"")+"</div></div></div>";
-var obs=summary.length?'<div class="observations"><div class="obs-title">&#x1F4A1; Key observations &mdash; '+wMeta.label+"</div>"+summary.map(function(l){return'<div class="obs-item">&bull; '+l+"</div>";}).join("")+"</div>":"";
-var noteHtml=note?'<div class="note-box">&#x2139;&#xFE0F; '+note+"</div>":"";
-var tableRows,tableHeaders;
-if(isTise){
-  var tiers=["Small","Medium","Large"];
-  tableRows=tiers.map(function(tier,ti){
-    var tierRows=data.filter(function(r){return r.sizeTier===tier;});
-    return tierRows.map(function(row,ri){
-      var divider=(ti>0&&ri===0)?' class="instabee tier-divider"':(row.cat==="instabee"?' class="instabee"':"");
-      return"<tr"+divider+'><td>'+(ri===0?'<span class="tier-pill">'+tier+"</span>":"")+'</td><td><span class="provider-name'+(row.cat==="instabee"?" ":'">'+row.provider)+(row.cat==="instabee"?'" style="color:#16a34a">'+row.provider+'</span><span class="instabee-badge">instabee</span>':"</span>")+'</td><td class="days-cell">'+row.desc+'</td><td class="price-cell">'+priceStr(row.price)+'</td><td class="days-cell">'+row.days+"</td></tr>";
-    }).join("");
-  }).join("");
-  tableHeaders="<th>Size tier</th><th>Provider</th><th>Service</th><th class=\"right\">Price</th><th>Lead time</th>";
-}
-else{
-  tableRows=data.map(function(row){return"<tr"+(row.cat==="instabee"?' class="instabee"':"")+'><td><span class="pos-circle '+posClass(row.pos)+'">'+row.pos+"</span></td><td><div><span class=\"provider-name\">"+row.provider+"</span>"+(row.cat==="instabee"?'<span class="instabee-badge">instabee</span>':"")+"</div><div class=\"provider-desc\">"+row.desc+'</div></td><td class="days-cell">'+row.days+'</td><td class="price-cell">'+priceStr(row.price)+"</td></tr>";}).join("");
-  tableHeaders="<th>#</th><th>Provider</th><th>Lead time</th><th class=\"right\">Price</th>";
-}
-return statCards+obs+noteHtml+'<div class="table-wrap"><div class="table-header">Delivery options &mdash; '+wMeta.scanDate+"</div><table><thead><tr>"+tableHeaders+"</tr></thead><tbody>"+tableRows+"</tbody></table></div>"+renderScreenshot(id);}
-function switchWeek(w){activeWeek=w;activeClientId="villoid";activeBrandId=null;renderAll();}
-function switchClient(id){activeClientId=id;activeBrandId=null;renderAll();}
-renderAll();
-</script>
+
+
+    /* ── Mount ────────────────────────────────────────────────────────────── */
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>
