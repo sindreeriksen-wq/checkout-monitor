@@ -125,11 +125,12 @@
 function App() {
   // ── WEEK REGISTRY ──────────────────────────────────────────────────────────
   // Add a new entry here each Monday. Never remove old ones.
-  const WEEKS = ["2026-W38", "2026-W39"];
+  const WEEKS = ["2026-W38", "2026-W39", "2026-W42"];
 
   const WEEK_META = {
     "2026-W38": { label: "Week 38", scanDate: "16 Sep 2026" },
     "2026-W39": { label: "Week 39", scanDate: "21 Sep 2026" },
+    "2026-W42": { label: "Week 42", scanDate: "12 Oct 2026" },
   };
 
   const WEEK_DATA = {
@@ -223,6 +224,56 @@ function App() {
         decades: "Scanned with 119 NOK product (on sale). Free shipping threshold at Decades is 800 NOK.",
         vic: "All sizes of Lloyd Chinos (dark-navy) sold out — could not add to cart. Delivery options inferred from Match/Decades (same Voice/Jean Paul checkout platform). Update product URL for next scan.",
         getinspired: "Product URL updated to Meraki Hand Soap 490ml (previous product unavailable). Klarna/Kustom iframe checkout. All 8 options confirmed unchanged from W38.",
+      },
+    },
+    "2026-W42": {
+      clients: [
+        { id:"villoid",      name:"Villoid",      type:"single", url:"villoid.no",      status:"success" },
+        { id:"voice",        name:"Voice",         type:"group",  url:"",                 status:"success",
+          brands:[
+            { id:"match",   name:"Match",   url:"matchfashion.no", status:"success" },
+            { id:"decades", name:"Decades", url:"decades.no",      status:"success" },
+            { id:"vic",     name:"Vic",     url:"vic.no",          status:"success" },
+          ]
+        },
+        { id:"getinspired",  name:"Get Inspired",  type:"single", url:"getinspired.no",  status:"success" },
+        { id:"bjorklund",    name:"Bjørklund",     type:"single", url:"bjorklund.no",    status:"success" },
+        { id:"tise",         name:"Tise",           type:"single", url:"tise.com",        status:"partial" },
+        { id:"ankerstjerne", name:"Ankerstjerne",   type:"single", url:"ankerstjerne.no", status:"success" },
+        { id:"telenor",      name:"Telenor",        type:"single", url:"telenor.no",      status:"manual_needed" },
+      ],
+      allData: {
+        villoid: [ {pos:1,provider:"Posten",cat:"competitor",price:29,days:"2–4 days",desc:"Til postkasse eller nærmeste utleveringssted"}, {pos:2,provider:"Instabox",cat:"instabee",price:49,days:"2–3 days",desc:"Pakkeskap"}, {pos:3,provider:"Posten",cat:"competitor",price:49,days:"1–2 days",desc:"Pakkeboks"}, {pos:4,provider:"Posten",cat:"competitor",price:49,days:"—",desc:"Til Hentested"}, {pos:5,provider:"Porterbuddy",cat:"instabee",price:69,days:"—",desc:"Bestill før kl 11 og få levert samme virkedag (neste dag i regioner)"}, {pos:6,provider:"PostNord",cat:"competitor",price:49,days:"—",desc:"Pakkeautomat"}, {pos:7,provider:"Helthjem",cat:"competitor",price:39,days:"2–4 days",desc:"Til dørmatte/postkasse eller nærmeste utleveringssted"} ],
+        ankerstjerne: [ {pos:1,provider:"Instabox",cat:"instabee",price:39,days:"Tomorrow",desc:"Instabox Pakkeautomat Grønlandleiret Extra (i morgen ~19:00)"}, {pos:2,provider:"Bring",cat:"competitor",price:39,days:"—",desc:"Bring Pakke i postkassen"}, {pos:3,provider:"PostNord",cat:"competitor",price:49,days:"—",desc:"Post Nord til nærmeste pakkeboks / Mypack small"}, {pos:4,provider:"Prøvepakke frakt",cat:"unknown",price:49,days:"—",desc:"Prøvepakke frakt"}, {pos:5,provider:"Helthjem",cat:"competitor",price:59,days:"—",desc:"Helt Hjem - levering til postkasse/dørmatte"}, {pos:6,provider:"PostNord",cat:"competitor",price:59,days:"—",desc:"Post Nord til nærmeste hentested / MyPack Collect"}, {pos:7,provider:"Porterbuddy",cat:"instabee",price:90,days:"Same day",desc:"Porterbuddy levert på døren - i dag (mandag) 17:30-21:30"}, {pos:8,provider:"Porterbuddy",cat:"instabee",price:90,days:"Tomorrow",desc:"Porterbuddy levert på døren - i morgen (tirsdag) 17:30-21:30"}, {pos:9,provider:"Porterbuddy",cat:"instabee",price:90,days:"—",desc:"Porterbuddy levert på døren - om 2 dager (onsdag) 17:30-21:30"} ],
+        match: [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        decades: [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        vic: [ {pos:1,provider:"PostNord",cat:"competitor",price:59,days:"2–4 days",desc:"PostNord utleveringssted"}, {pos:2,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy"}, {pos:3,provider:"Hjemlevering",cat:"competitor",price:89,days:"2–4 days",desc:"Hjemlevering"}, {pos:4,provider:"Levering til butikk",cat:"competitor",price:0,days:"2–4 days",desc:"Levering til butikk"} ],
+        bjorklund: [ {pos:1,provider:"Porterbuddy",cat:"instabee",price:79,days:"—",desc:"Porterbuddy"}, {pos:2,provider:"Bring",cat:"competitor",price:59,days:"—",desc:"Til hentested"}, {pos:3,provider:"Bring",cat:"competitor",price:99,days:"—",desc:"Hjemlevering"}, {pos:4,provider:"Instabox",cat:"instabee",price:59,days:"—",desc:"Instabox"} ],
+        getinspired: [ {pos:1,provider:"Hjem i Postkassen",cat:"competitor",price:69,days:"Tomorrow",desc:"Hjem i Postkassen"}, {pos:2,provider:"Pakkeboks - Hent når du vil (Prioritert)",cat:"competitor",price:99,days:"Tomorrow",desc:"Pakkeboks - Hent når du vil (Prioritert)"}, {pos:3,provider:"Pakkeboks - Hent når du vil",cat:"competitor",price:69,days:"Tomorrow",desc:"Pakkeboks - Hent når du vil"}, {pos:4,provider:"Hentested / Post i butikk (Prioritert)",cat:"competitor",price:99,days:"Tomorrow",desc:"Hentested / Post i butikk (Prioritert)"}, {pos:5,provider:"Hentested / Post i butikk",cat:"competitor",price:79,days:"Tomorrow",desc:"Hentested / Post i butikk"}, {pos:6,provider:"Helthjem",cat:"competitor",price:79,days:"—",desc:"Helthjem Hjemlevering"}, {pos:7,provider:"Instabox",cat:"instabee",price:79,days:"Tomorrow",desc:"Instabox: Pakkeboks"}, {pos:8,provider:"Porterbuddy",cat:"instabee",price:89,days:"Same day",desc:"Porterbuddy: Hjemlevering"}, {pos:9,provider:"Posten",cat:"competitor",price:99,days:"Tomorrow",desc:"Posten: Hjemlevering"} ],
+        tise: [ {pos:1,provider:"Instabox",cat:"instabee",price:29,days:"1 day",desc:"Pakkeautomat",sizeTier:"Small"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"—",desc:"Posten/Helthjem",sizeTier:"Small"}, {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"—",desc:"Posten/Helthjem",sizeTier:"Small"}, {pos:1,provider:"Instabox",cat:"instabee",price:49,days:"1 day",desc:"Pakkeautomat",sizeTier:"Medium"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"—",desc:"Posten/Helthjem",sizeTier:"Medium"}, {pos:3,provider:"Helthjem",cat:"competitor",price:null,days:"—",desc:"Posten/Helthjem",sizeTier:"Medium"}, {pos:1,provider:"Instabox",cat:"instabee",price:89,days:"1 day",desc:"Pakkeautomat",sizeTier:"Large"}, {pos:2,provider:"Posten",cat:"competitor",price:null,days:"—",desc:"Posten/Helthjem",sizeTier:"Large"} ],
+        telenor: [],
+      },
+      summaries: {
+        villoid:     ["Instabox #2 (49 NOK) — 20 NOK above cheapest Posten (29 NOK). No change from W41.","Porterbuddy #5 — 69 NOK. Room to negotiate higher placement.","Posten holds 3 slots (pos 1,3,4) — worth raising with Villoid."],
+        getinspired: ["Instabox #7 (79 NOK) and Porterbuddy #8 (89 NOK) — 6 options ahead of Instabox. No change from W41.","Porterbuddy (89 NOK) is among the most expensive options — price cut could lift position.","Klarna/Kustom iframe checkout: delivery order controlled by Klarna, not Get Inspired."],
+        bjorklund:   ["Porterbuddy #1 (79 NOK) — top position. ✅ Instabox #4 at 59 NOK, ties cheapest (Bring hentested 59 NOK). No change from W41.","Both Instabee brands present."],
+        match:       ["Porterbuddy #2 (89 NOK) — right after PostNord (59 NOK). ✅ No change from W41.","Porterbuddy 89 NOK ties with generic home delivery.","No Instabox present."],
+        decades:     ["Porterbuddy #2 (89 NOK) — right after PostNord (59 NOK). ✅ No change from W41.","Same platform and pricing as Match.","No Instabox present."],
+        vic:         ["Porterbuddy #2 (89 NOK) — right after PostNord (59 NOK). ✅ Full scan with in-stock product. No change from W41.","89 NOK ties generic home delivery (pos 3).","No Instabox present."],
+        tise:        ["Instabox #1 across all size tiers. ✅ No change from W38.","Instabox: Small 29 / Medium 49 / Large 89 NOK.","Posten + Helthjem available — competitor prices need Norwegian IP to confirm. Helthjem for Small + Medium only."],
+        ankerstjerne:["Instabox #1 at 39 NOK — ties cheapest with Bring (39 NOK). ✅ No change from W41.","Porterbuddy #7/8/9 — three day-slots at 90 NOK each.","9 confirmed options."],
+        telenor:     ["Permanent manual check — BankID blocks automation."],
+      },
+      scanNotes: {
+        tise: "Marketplace. Scanned via Tise API (one listing per size tier). Instabox: Small 29 NOK, Medium 49 NOK, Large 89 NOK. Competitor prices unavailable without Norwegian IP.",
+        ankerstjerne: "Shopify. 9 delivery options. Instabox pos 1 (39 NOK), Porterbuddy pos 7–9 (90 NOK, 3 day-slots).",
+        telenor: "Permanent manual check — BankID required at checkout.",
+        match: "Automated scan, in-stock product. Free shipping threshold at Match is 600 NOK.",
+        decades: "Automated scan with 119 NOK product. Free shipping threshold at Decades is 800 NOK.",
+        vic: "Automated scan, in-stock product.",
+        getinspired: "Klarna/Kustom iframe checkout. 9 options. Product: Meraki Hand Soap 490ml.",
+        bjorklund: "4 delivery options. Both Instabee brands present.",
+        villoid: "Shopify. 7 delivery options.",
       },
     },
   };
