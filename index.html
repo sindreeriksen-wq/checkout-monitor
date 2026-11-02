@@ -125,7 +125,7 @@
 function App() {
   // ── WEEK REGISTRY ──────────────────────────────────────────────────────────
   // Add a new entry here each Monday. Never remove old ones.
-  const WEEKS = ["2026-W38", "2026-W39", "2026-W42", "2026-W43", "2026-W44"];
+  const WEEKS = ["2026-W38", "2026-W39", "2026-W42", "2026-W43", "2026-W44", "2026-W45"];
 
   const WEEK_META = {
     "2026-W38": { label: "Week 38", scanDate: "16 Sep 2026" },
@@ -133,6 +133,7 @@ function App() {
     "2026-W42": { label: "Week 42", scanDate: "12 Oct 2026" },
     "2026-W43": { label: "Week 43", scanDate: "19 Oct 2026" },
     "2026-W44": { label: "Week 44", scanDate: "26 Oct 2026" },
+    "2026-W45": { label: "Week 45", scanDate: "2 Nov 2026" },
   };
 
   const WEEK_DATA = {
@@ -376,6 +377,83 @@ function App() {
         getinspired: "Klarna/Kustom iframe checkout. 8 options. Product: https://www.getinspired.no/beauty/hudpleie/kroppspleie/handsape/meraki-everyday-pampering-gaveeske-mr-309770427-brun",
         bjorklund: "4 delivery options. Both Instabee brands present.",
         villoid: "Shopify. 7 delivery options. Test product variant 57198293516628 (249 NOK).",
+      },
+    },
+    "2026-W45": {
+      clients: [
+        { id:"villoid", name:"Villoid", type:"single", url:"villoid.no", status:"success" },
+        { id:"voice", name:"Voice", type:"group", url:"", status:"partial",
+          brands:[
+            { id:"match", name:"Match", url:"matchfashion.no", status:"error" },
+            { id:"decades", name:"Decades", url:"decades.no", status:"success" },
+            { id:"vic", name:"Vic", url:"vic.no", status:"success" },
+          ]
+        },
+        { id:"getinspired", name:"Get Inspired", type:"single", url:"getinspired.no", status:"success" },
+        { id:"bjorklund", name:"Bjørklund", type:"single", url:"bjorklund.no", status:"success" },
+        { id:"tise", name:"Tise", type:"single", url:"tise.com", status:"partial" },
+        { id:"ankerstjerne", name:"Ankerstjerne", type:"single", url:"ankerstjerne.no", status:"success" },
+        { id:"telenor", name:"Telenor", type:"single", url:"telenor.no", status:"manual_needed" },
+      ],
+      allData: {
+        villoid: [ {"pos":1,"provider":"Posten","cat":"competitor","price":69,"days":"2–4 days","desc":"Posten - Til postkasse eller nærmeste utleveringssted — Leveres om 2–4 virkedager"}, {"pos":2,"provider":"Posten","cat":"competitor","price":89,"days":"1–2 days","desc":"Posten - Pakkeboks — Leveres om 1–2 virkedager"}, {"pos":3,"provider":"Instabox","cat":"instabee","price":89,"days":"2–3 days","desc":"Instabox - Pakkeskap — Leveres om 2–3 virkedager"}, {"pos":4,"provider":"Posten","cat":"competitor","price":89,"days":"—","desc":"Posten - Til Hentested — Leveres i løpet av 2 virkedager"}, {"pos":5,"provider":"Porterbuddy","cat":"instabee","price":89,"days":"—","desc":"Porterbuddy - Bestill før kl 11 og få levert samme virkedag (neste dag i regioner) — Leveres på 2. november"}, {"pos":6,"provider":"Postnord","cat":"competitor","price":89,"days":"—","desc":"Postnord - Pakkeautomat — Leveres i løpet av 2 virkedager"}, {"pos":7,"provider":"Helthjem","cat":"competitor","price":79,"days":"2–4 days","desc":"Helthjem - Til dørmatte/postkasse eller nærmeste utleveringssted — Leveres om 2–4 virkedager"} ],
+        ankerstjerne: [ {"pos":1,"provider":"Instabox","cat":"instabee","price":39,"days":"—","desc":"Instabox Pakkeautomat Grønlandleiret Extra (i morgen ~16:00) — Grønlandsleiret 25A 0190 Oslo"}, {"pos":2,"provider":"Bring","cat":"competitor","price":39,"days":"—","desc":"Bring Pakke i postkassen"}, {"pos":3,"provider":"Postnord","cat":"competitor","price":49,"days":"—","desc":"Post Nord til nærmeste pakkeboks / Mypack small"}, {"pos":4,"provider":"Prøvepakke frakt","cat":"unknown","price":49,"days":"—","desc":"Prøvepakke frakt"}, {"pos":5,"provider":"Helthjem","cat":"competitor","price":59,"days":"—","desc":"Helt Hjem - levering til postkasse/dørmatte"}, {"pos":6,"provider":"Postnord","cat":"competitor","price":59,"days":"—","desc":"Post Nord til nærmeste hentested / MyPack Collect"}, {"pos":7,"provider":"Porterbuddy","cat":"instabee","price":90,"days":"—","desc":"Porterbuddy levert på døren - i morgen (tirsdag) 17:00-22:00"}, {"pos":8,"provider":"Porterbuddy","cat":"instabee","price":90,"days":"—","desc":"Porterbuddy levert på døren - om 2 dager (onsdag) 17:00-22:00"}, {"pos":9,"provider":"Porterbuddy","cat":"instabee","price":90,"days":"—","desc":"Porterbuddy levert på døren - om 3 dager (torsdag) 17:00-22:00"} ],
+        match: [  ],
+        decades: [ {"pos":1,"provider":"Postnord","cat":"competitor","price":0,"days":"2–4 days","desc":"PostNord utleveringssted — Få varen sendt til ditt utleveringssted, 2-4 virkedagerPostNord utleveringssted Pakkeautomat Extra GrønlandsleiretGrønla"}, {"pos":2,"provider":"Porterbuddy","cat":"instabee","price":0,"days":"—","desc":"Porterbuddy — Vennligst velg tidspunkt for levering (bestill før kl 12.00 og få varen hjem samme dag) Porterbuddy"}, {"pos":3,"provider":"Hjemlevering","cat":"unknown","price":89,"days":"2–4 days","desc":"Hjemlevering — Få varen sendt til døren, 2-4 virkedagerHjemlevering"}, {"pos":4,"provider":"Levering til butikk","cat":"unknown","price":0,"days":"2–4 days","desc":"Levering til butikk — Hent i din butikk, 2-4 virkedager"} ],
+        vic: [ {"pos":1,"provider":"Postnord","cat":"competitor","price":59,"days":"2–4 days","desc":"PostNord utleveringssted — Få varen sendt til ditt utleveringssted, 2-4 virkedagerPostNord utleveringssted Pakkeautomat EnerhauggataEnerhauggata 1,"}, {"pos":2,"provider":"Porterbuddy","cat":"instabee","price":89,"days":"—","desc":"Porterbuddy — Vennligst velg tidspunkt for levering (bestill før kl 12.00 og få varen hjem samme dag) Porterbuddy"}, {"pos":3,"provider":"Hjemlevering","cat":"unknown","price":89,"days":"2–4 days","desc":"Hjemlevering — Få varen sendt til døren, 2-4 virkedagerHjemlevering"}, {"pos":4,"provider":"Levering til butikk","cat":"unknown","price":0,"days":"2–4 days","desc":"Levering til butikk — Hent i din butikk, 2-4 virkedager"} ],
+        bjorklund: [ {"pos":1,"provider":"Porterbuddy","cat":"instabee","price":79,"days":"—","desc":"Porterbuddy"}, {"pos":2,"provider":"Bring","cat":"competitor","price":59,"days":"—","desc":"Bring - Til hentested"}, {"pos":3,"provider":"Bring","cat":"competitor","price":99,"days":"—","desc":"Bring - Hjemlevering"}, {"pos":4,"provider":"Instabox","cat":"instabee","price":59,"days":"—","desc":"Instabox"} ],
+        getinspired: [ {"pos":1,"provider":"Pakkeboks - Hent når du vil (Prioritert)","cat":"unknown","price":99,"days":"—","desc":"Pakkeboks - Hent når du vil (Prioritert) — Levert mellom i morgen og torsdag 5. november"}, {"pos":2,"provider":"Pakkeboks - Hent når du vil","cat":"unknown","price":69,"days":"—","desc":"Pakkeboks - Hent når du vil — Levert mellom i morgen og fredag 6. november"}, {"pos":3,"provider":"Hentested / Post i butikk (Prioritert)","cat":"unknown","price":99,"days":"—","desc":"Hentested / Post i butikk (Prioritert) — Levert mellom i morgen og torsdag 5. november"}, {"pos":4,"provider":"Hentested / Post i butikk","cat":"unknown","price":79,"days":"—","desc":"Hentested / Post i butikk — Levert mellom i morgen og fredag 6. november"}, {"pos":5,"provider":"Helthjem","cat":"competitor","price":79,"days":"—","desc":"Helthjem Hjemlevering — Levert mellom onsdag 4. november og fredag 6. november"}, {"pos":6,"provider":"Instabox","cat":"instabee","price":79,"days":"—","desc":"Instabox: Pakkeboks — Levert i morgen"}, {"pos":7,"provider":"Porterbuddy","cat":"instabee","price":89,"days":"—","desc":"Porterbuddy: Hjemlevering — Levert senest i morgen"}, {"pos":8,"provider":"Posten","cat":"competitor","price":99,"days":"—","desc":"Posten: Hjemlevering — Levert mellom i morgen og torsdag 5. november"} ],
+        tise: [ {"pos":1,"provider":"Instabox","cat":"instabee","price":29,"days":"1 day","desc":"Pakkeautomat","sizeTier":"Small"}, {"pos":2,"provider":"Posten","cat":"competitor","price":null,"days":"—","desc":"Posten/Helthjem","sizeTier":"Small"}, {"pos":3,"provider":"Helthjem","cat":"competitor","price":null,"days":"—","desc":"Posten/Helthjem","sizeTier":"Small"}, {"pos":1,"provider":"Instabox","cat":"instabee","price":49,"days":"1 day","desc":"Pakkeautomat","sizeTier":"Medium"}, {"pos":2,"provider":"Posten","cat":"competitor","price":null,"days":"—","desc":"Posten/Helthjem","sizeTier":"Medium"}, {"pos":3,"provider":"Helthjem","cat":"competitor","price":null,"days":"—","desc":"Posten/Helthjem","sizeTier":"Medium"}, {"pos":1,"provider":"Instabox","cat":"instabee","price":89,"days":"1 day","desc":"Pakkeautomat","sizeTier":"Large"}, {"pos":2,"provider":"Posten","cat":"competitor","price":null,"days":"—","desc":"Posten/Helthjem","sizeTier":"Large"} ],
+        telenor: [  ],
+      },
+      summaries: {
+        "villoid": [
+          "Instabox #3 (89 NOK), Porterbuddy #5 (89 NOK) — cheapest option: Posten 69 NOK (#1). 7 options.",
+          "Change vs W44: Instabox moved #2 → #3 (a second Posten 89 NOK option is now listed ahead of it). Prices unchanged; Porterbuddy still #5. Scan succeeded on attempt 2."
+        ],
+        "ankerstjerne": [
+          "Instabox #1 (39 NOK), Porterbuddy #7 (90 NOK) — cheapest option: Instabox 39 NOK (#1). 9 options.",
+          "No change from W44 (positions and prices identical)."
+        ],
+        "match": [
+          "Scan failed: checkout step did not render on repeated attempts (known flaky site). No data this week — needs a manual check or retry."
+        ],
+        "decades": [
+          "Porterbuddy #2 (0 NOK) — cheapest option: Postnord 0 NOK (#1). 4 options.",
+          "Postnord and Porterbuddy show 0 NOK vs 59 / 89 NOK in W44 — the script used a different test product (Bogart langermet piqué), likely above the 800 NOK free-shipping threshold. NOT like-for-like with W44; not a real price change (unverified)."
+        ],
+        "vic": [
+          "Porterbuddy #2 (89 NOK) — cheapest option: Levering til butikk 0 NOK (#4). 4 options.",
+          "No change from W44 (positions and prices identical). Different in-stock test product again; delivery options identical. No Instabox present."
+        ],
+        "bjorklund": [
+          "Instabox #4 (59 NOK), Porterbuddy #1 (79 NOK) — cheapest option: Bring 59 NOK (#2). 4 options.",
+          "No change from W44 (positions and prices identical). Both Instabee brands present."
+        ],
+        "getinspired": [
+          "Instabox #6 (79 NOK), Porterbuddy #7 (89 NOK) — cheapest option: Pakkeboks - Hent når du vil 69 NOK (#2). 8 options.",
+          "No change from W44 (same test product; positions and prices identical).",
+          "Klarna/Kustom iframe checkout: delivery order controlled by Klarna, not Get Inspired."
+        ],
+        "tise": [
+          "Instabox #1 across all size tiers. ✅",
+          "Small 29 NOK, Medium 49 NOK, Large 89 NOK — buyer-paid listings found for all tiers. W44 showed 24 / 0 / 0 NOK (0 = seller-paid listings, not comparable). Different listings than W44, so not necessarily a real price change (unverified).",
+          "Posten + Helthjem available — competitor prices need Norwegian IP to confirm. Helthjem for Small + Medium only."
+        ],
+        "telenor": [
+          "Permanent manual check — BankID blocks automation."
+        ]
+      },
+      scanNotes: {
+        "tise": "Marketplace. Scanned via Tise API (one buyer-paid listing per size tier). Instabox: Small 29, Medium 49, Large 89 NOK. Competitor prices unavailable without Norwegian IP.",
+        "ankerstjerne": "Shopify. 9 delivery options.",
+        "telenor": "Permanent manual check — BankID required at checkout.",
+        "match": "Automated scan failed (checkout fields/delivery step timed out on all attempts). Known flaky site; the product page itself loads. Manual check needed.",
+        "decades": "Automated scan, product https://www.decades.no/herreklaer/t-skjorter-pique/bogart-langermet-pique/urban-chic/ (succeeded on attempt 3). Free shipping threshold at Decades is 800 NOK.",
+        "vic": "Automated scan, product https://www.vic.no/herreklaer/skjorter/frederick-rutete-skjorte-2de481da/coconut-milk/ (succeeded on attempt 2).",
+        "getinspired": "Klarna/Kustom iframe checkout. 8 options. Product: https://www.getinspired.no/beauty/hudpleie/kroppspleie/handsape/meraki-everyday-pampering-gaveeske-mr-309770427-brun",
+        "bjorklund": "4 delivery options. Both Instabee brands present.",
+        "villoid": "Shopify. 7 delivery options. Test product variant 57198293516628 (249 NOK). Succeeded on attempt 2."
       },
     },
   };
